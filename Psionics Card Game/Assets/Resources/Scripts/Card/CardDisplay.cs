@@ -36,8 +36,8 @@ public class CardDisplay : MonoBehaviour
 
             GameObject defenceImage = GameObject.Find("Defence");
             defenceImage.SetActive(false);
-            GameObject concistencyImage = GameObject.Find("Concistency");
-            concistencyImage.SetActive(false);
+            GameObject consistencyImage = GameObject.Find("Consistency");
+            consistencyImage.SetActive(false);
             GameObject absorbingImage = GameObject.Find("Absorbing");
             absorbingImage.SetActive(false);
             GameObject trashImage = GameObject.Find("Trash");
@@ -45,8 +45,8 @@ public class CardDisplay : MonoBehaviour
 
             if (card.CardType == Enums.CardType.Shield)
             {
-                if (!concistencyImage.activeSelf)
-                    concistencyImage.SetActive(true);
+                if (!consistencyImage.activeSelf)
+                    consistencyImage.SetActive(true);
                 ConsistencyValue.text = card.ConcistencyValue.ToString();
                 if (card.CardSubType == Enums.CardSubType.Basic)
                 {
@@ -79,8 +79,8 @@ public class CardDisplay : MonoBehaviour
                 if (absorbingImage.activeSelf)
                     absorbingImage.SetActive(false);
                 
-                if (concistencyImage.activeSelf)
-                    concistencyImage.SetActive(false);
+                if (consistencyImage.activeSelf)
+                    consistencyImage.SetActive(false);
                 
                 if (!trashImage.activeSelf)
                     trashImage.SetActive(true);
