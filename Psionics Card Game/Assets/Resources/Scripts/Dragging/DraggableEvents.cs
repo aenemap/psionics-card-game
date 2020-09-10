@@ -7,13 +7,14 @@ public class DraggableEvents : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 {
     public void OnBeginDrag(PointerEventData eventData)
     {
+        HoverPreview.PreviewsAllowed = false;
         Debug.Log("OnBeginDrag");
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         Debug.Log("OnDrag");
-        gameObject.transform.position = eventData.position;
+        this.transform.position = eventData.position;
     }
 
     public void OnEndDrag(PointerEventData eventData)

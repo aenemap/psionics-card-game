@@ -1345,7 +1345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f46c1a5f3cb438645acf82d18e3067ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 0}
+  card: {fileID: 11400000, guid: 23ce67df9910a4b4aaeb855000e7ebdf, type: 2}
   CardName: {fileID: 2049007444927345616}
   CardType: {fileID: 2049007445689631745}
   CardSubType: {fileID: 2049007444203368435}
@@ -3655,7 +3655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e7c1ab121a74914f8c4ac0cd07c8eef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 0}
+  card: {fileID: 11400000, guid: 23ce67df9910a4b4aaeb855000e7ebdf, type: 2}
   CardName: {fileID: 5371682379476787808}
   CardType: {fileID: 2234616165281954955}
   CardSubType: {fileID: 5329600584912799359}
