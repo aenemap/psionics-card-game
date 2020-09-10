@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 320103613}
   - component: {fileID: 320103615}
   - component: {fileID: 320103614}
+  - component: {fileID: 320103616}
   m_Layer: 0
   m_Name: Shields
   m_TagString: Untagged
@@ -198,6 +199,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 320103612}
   m_CullTransparentMesh: 0
+--- !u!114 &320103616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320103612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fd8f1d7f83fbda4a82f07deec35c557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &460905488
 GameObject:
   m_ObjectHideFlags: 0

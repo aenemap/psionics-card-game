@@ -1279,7 +1279,8 @@ GameObject:
   - component: {fileID: 2049007444732423447}
   - component: {fileID: 2049007444732423432}
   - component: {fileID: 2049007444732423433}
-  - component: {fileID: 3302288538965009696}
+  - component: {fileID: 3184715214636875162}
+  - component: {fileID: 5258586741429487228}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -1376,7 +1377,7 @@ MonoBehaviour:
   previewGameObject: {fileID: 8495071553481332794}
   ActivateInAwake: 1
   objIndex: 0
---- !u!114 &3302288538965009696
+--- !u!114 &3184715214636875162
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1389,6 +1390,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UsePointerDisplacement: 1
+--- !u!225 &5258586741429487228
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049007444732423445}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2049007444927345630
 GameObject:
   m_ObjectHideFlags: 0

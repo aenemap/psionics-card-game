@@ -23,6 +23,7 @@ public class Draggable : MonoBehaviour
         zDisplacement = -Camera.main.transform.position.z + transform.position.z;
         //currentPosition = transform.position;
         transform.rotation = Quaternion.Euler(0, 0, 0);
+        transform.GetComponent<CanvasGroup>().blocksRaycasts = false;
         if (UsePointerDisplacement)
             pointerDisplacement = -transform.position + MouseInWorldCoords();
         else
@@ -46,10 +47,12 @@ public class Draggable : MonoBehaviour
         if (dragging)
         {
             dragging = false;
+            transform.GetComponent<CanvasGroup>().blocksRaycasts = true;
             HoverPreview.PreviewsAllowed = true;       // NEW LINE
             //transform.position = currentPosition;
         }
-    }   
+    }
+    
 
     // returns mouse position in World coordinates for our GameObject to follow. 
     private Vector3 MouseInWorldCoords()
