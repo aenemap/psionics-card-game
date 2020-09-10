@@ -43,4 +43,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0b517ac95f21094786daf77933c059d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 9065499050417505534, guid: 8b11ed6da11f7f345a603964aee9d82e, type: 3}
+  card: {fileID: 2049007444732423445, guid: 1e01037ed7b51d74aa46b74e6467e965, type: 3}

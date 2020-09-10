@@ -15,5 +15,7 @@ MonoBehaviour:
   DeckId: 3
   DeckName: Test Deck 3
   Deck:
-  - {fileID: 11400000, guid: 23ce67df9910a4b4aaeb855000e7ebdf, type: 2}
+  - {fileID: 11400000, guid: 0b6aae12bcdbce14094b895e67024077, type: 2}
+  - {fileID: 11400000, guid: bf7e2f3db1310104983ec9d128d37ed3, type: 2}
+  - {fileID: 11400000, guid: bf7e2f3db1310104983ec9d128d37ed3, type: 2}
   DiscardPile: []

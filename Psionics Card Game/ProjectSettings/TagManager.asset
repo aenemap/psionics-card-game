@@ -41,3 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: PlayerArea
+    uniqueID: 2304457413
+    locked: 0
+  - name: Cards
+    uniqueID: 1330999399
+    locked: 0
+  - name: AboveEverything
+    uniqueID: 2068923321
+    locked: 0
