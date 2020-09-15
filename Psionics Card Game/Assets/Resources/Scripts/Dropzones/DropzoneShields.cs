@@ -15,9 +15,9 @@ public class DropzoneShields : MonoBehaviour, IPointerEnterHandler, IPointerExit
         Debug.Log("Shields OnDrop " + gameObject.name);
         eventData.pointerDrag.transform.SetParent(this.transform);
         CardDisplay cardDisplay = eventData.pointerDrag.GetComponent<CardDisplay>();
-        //HandEvents.current.RemoveCardFromHand(Convert.ToInt32(cardDisplay.CardId.text));
-        //HandEvents.current.BendHand();
-        
+        HandEvents.current.RemoveCardFromHand(Convert.ToInt32(cardDisplay.CardId.text));
+        HandEvents.current.BendHand();
+
     }
 
     public void OnPointerEnter(PointerEventData eventData)

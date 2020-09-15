@@ -11,12 +11,18 @@ public class HandCards : MonoBehaviour
     public Transform pivot;
     public GameObject Hand;
 
+    [Header("Bend Info")]
+    public float cardWidth;
+    public float bentAngle;
+    public float spacing;
+    public float height;
+
     public List<GameObject> cardsInHand = new List<GameObject>();
 
-    private float cardWidth = 4.5f;
-    private float bentAngle = 20;
-    private float spacing = -2;
-    private float height = 0.12f;
+    //private float cardWidth = 10f;
+    //private float bentAngle = 20;
+    //private float spacing = -2;
+    //private float height = 0.12f;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,11 +55,11 @@ public class HandCards : MonoBehaviour
 
     private void OnRemoveCardFromHand(int cardId)
     {
-        //cardsInHand = cardsInHand.Where(w =>
-        //{
-        //    CardDisplay cardDisplay = w.transform.GetComponent<CardDisplay>();
-        //    return cardDisplay.CardId.text != cardId.ToString();
-        //}).ToList();
+        cardsInHand = cardsInHand.Where(w =>
+        {
+            CardDisplay cardDisplay = w.transform.GetComponent<CardDisplay>();
+            return cardDisplay.CardId.text != cardId.ToString();
+        }).ToList();
     }
 
     private void OnBendHand()

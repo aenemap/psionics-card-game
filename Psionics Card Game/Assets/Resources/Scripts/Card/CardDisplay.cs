@@ -10,7 +10,7 @@ public class CardDisplay : MonoBehaviour
 {
     public Card card;
 
-    //public Text CardId;
+    public TextMeshProUGUI CardId;
     public TextMeshProUGUI CardName;
     public TextMeshProUGUI CardTypeAndSubType;
     public TextMeshProUGUI EnergyCost;
@@ -24,7 +24,7 @@ public class CardDisplay : MonoBehaviour
     {
         if (card != null)
         {
-            //CardId.text = card.CardId.ToString();
+            CardId.text = card.CardId.ToString();
             CardName.text = card.CardName;
             CardTypeAndSubType.text = card.CardType + " - " + card.CardSubType;
             EnergyCost.text = card.EnergyCost.ToString();
