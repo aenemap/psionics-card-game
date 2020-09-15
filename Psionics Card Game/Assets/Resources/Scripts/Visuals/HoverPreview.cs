@@ -57,7 +57,7 @@ public class HoverPreview: MonoBehaviour
         if (PreviewsAllowed && ThisPreviewEnabled)
             PreviewThisObject();
     }
-        
+
     void OnMouseExit()
     {
         OverCollider = false;

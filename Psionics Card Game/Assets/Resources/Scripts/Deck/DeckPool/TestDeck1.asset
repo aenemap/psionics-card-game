@@ -15,14 +15,14 @@ MonoBehaviour:
   DeckId: 1
   DeckName: TestDeck1
   Deck:
+  - {fileID: 11400000, guid: e397e9424654a7140b4ee6caf3d0189a, type: 2}
+  - {fileID: 11400000, guid: a7de767910cdea44b839a8dd562acd41, type: 2}
+  - {fileID: 11400000, guid: 6bccbbf2256dd4c4abe980a3c47c8c85, type: 2}
   - {fileID: 11400000, guid: e1b297dd29698964f9b349ae68c7e824, type: 2}
   - {fileID: 11400000, guid: bf7e2f3db1310104983ec9d128d37ed3, type: 2}
   - {fileID: 11400000, guid: 0b6aae12bcdbce14094b895e67024077, type: 2}
-  - {fileID: 11400000, guid: c2073fb5c8fa2964baadb86f7210387c, type: 2}
-  - {fileID: 11400000, guid: 23ce67df9910a4b4aaeb855000e7ebdf, type: 2}
-  - {fileID: 11400000, guid: e1b297dd29698964f9b349ae68c7e824, type: 2}
-  - {fileID: 11400000, guid: bf7e2f3db1310104983ec9d128d37ed3, type: 2}
-  - {fileID: 11400000, guid: 0b6aae12bcdbce14094b895e67024077, type: 2}
+  - {fileID: 11400000, guid: adda82b3088cf634b80f795f6114cfd8, type: 2}
+  - {fileID: 11400000, guid: 4c7fecec893e1f14084f54d47ed8f5a6, type: 2}
   - {fileID: 11400000, guid: c2073fb5c8fa2964baadb86f7210387c, type: 2}
   - {fileID: 11400000, guid: 23ce67df9910a4b4aaeb855000e7ebdf, type: 2}
   DiscardPile: []

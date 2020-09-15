@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,7 @@ public class HandCards : MonoBehaviour
     public Transform pivot;
     public GameObject Hand;
 
-    private List<GameObject> cardsInHand = new List<GameObject>();
+    public List<GameObject> cardsInHand = new List<GameObject>();
 
     private float cardWidth = 4.5f;
     private float bentAngle = 20;
@@ -19,6 +20,10 @@ public class HandCards : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        HandEvents.current.onBendHand += OnBendHand;
+        HandEvents.current.onRemoveCardFromHand += OnRemoveCardFromHand;
+        HandEvents.current.onAddCardToHand += OnAddCardToHand;
+
         var deck = deckManager.GetDeckById(1);
         if (deck != null)
         {
@@ -29,16 +34,36 @@ public class HandCards : MonoBehaviour
                 crd.transform.SetParent(Hand.transform, false);
                 
             }
-            if (cardsInHand.Count > 1)
-                Bent(cardsInHand);
+            
+            Bent(cardsInHand);
            
         }
 
     }
 
-    private void Bent(List<GameObject> cards)
+    private void OnAddCardToHand(GameObject card)
     {
-        if (cards == null)
+        cardsInHand.Add(card);
+        Bent(cardsInHand);
+    }
+
+    private void OnRemoveCardFromHand(int cardId)
+    {
+        //cardsInHand = cardsInHand.Where(w =>
+        //{
+        //    CardDisplay cardDisplay = w.transform.GetComponent<CardDisplay>();
+        //    return cardDisplay.CardId.text != cardId.ToString();
+        //}).ToList();
+    }
+
+    private void OnBendHand()
+    {
+        Bent(cardsInHand);
+    }
+
+    public void Bent(List<GameObject> cards)
+    {
+        if (cards == null || cards.Count < 1)
             return;
 
         var fullAngle = -bentAngle;

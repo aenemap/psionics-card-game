@@ -43,4 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0b517ac95f21094786daf77933c059d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 2049007444732423445, guid: 1e01037ed7b51d74aa46b74e6467e965, type: 3}
+  shieldCard: {fileID: 2769753056331378600, guid: d98f19e041e22594a97e79c9e297e1cd, type: 3}
+  shieldAbsorbingCard: {fileID: 5508129005809944509, guid: c9572df6c57655c45ae904e2a1f7a2c3, type: 3}
+  talentCard: {fileID: 4572690453058151640, guid: 131085cf59c0f9642974f3bab3d1aba5, type: 3}
+  eventCard: {fileID: 8653782343194278731, guid: d3257fc6448542a479faec803309696d, type: 3}
