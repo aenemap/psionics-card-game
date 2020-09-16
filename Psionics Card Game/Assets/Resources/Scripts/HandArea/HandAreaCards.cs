@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HandCards : MonoBehaviour
+public class HandAreaCards : MonoBehaviour
 {
     public CardManager cardManager;
     public DeckManager deckManager;
@@ -26,18 +26,18 @@ public class HandCards : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        HandEvents.current.onBendHand += OnBendHand;
-        HandEvents.current.onRemoveCardFromHand += OnRemoveCardFromHand;
-        HandEvents.current.onAddCardToHand += OnAddCardToHand;
+        HandAreaEvents.current.onBendHand += OnBendHand;
+        HandAreaEvents.current.onRemoveCardFromHand += OnRemoveCardFromHand;
+        HandAreaEvents.current.onAddCardToHand += OnAddCardToHand;
 
-        var deck = deckManager.GetDeckById(1);
+        var deck = deckManager.GetDeckById(3);
         if (deck != null)
         {
             foreach(Card card in deck.Deck)
             {
                 GameObject crd = cardManager.GetCard(card.CardId);
                 cardsInHand.Add(crd);
-                crd.transform.SetParent(Hand.transform, false);
+                crd.transform.SetParent(pivot.transform, false);
                 
             }
             
@@ -49,7 +49,9 @@ public class HandCards : MonoBehaviour
 
     private void OnAddCardToHand(GameObject card)
     {
+        
         cardsInHand.Add(card);
+        card.transform.SetParent(pivot.transform);
         Bent(cardsInHand);
     }
 
@@ -82,6 +84,7 @@ public class HandCards : MonoBehaviour
         for (var i = 0; i < cards.Count; i++ )
         {
             var card = cards[i];
+            card.transform.SetSiblingIndex(i);
 
             var angleTwist = firstAngle + i * anglePerCard;
 

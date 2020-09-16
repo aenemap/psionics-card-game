@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 
-public class HoverPreview: MonoBehaviour
+public class HoverPreview: MonoBehaviour//, IPointerEnterHandler, IPointerExitHandler
 {
     // PUBLIC FIELDS
     public GameObject TurnThisOffWhenPreviewing;  // if this is null, will not turn off anything 
@@ -10,10 +11,12 @@ public class HoverPreview: MonoBehaviour
     public float TargetScale;
     public GameObject previewGameObject;
     public bool ActivateInAwake = false;
-    public int objIndex;
+    private static int objIndex;
 
     // PRIVATE FIELDS
     private static HoverPreview currentlyViewing = null;
+
+    private BoxCollider col;
 
     // PROPERTIES WITH UNDERLYING PRIVATE FIELDS
     private static bool _PreviewsAllowed = true;
@@ -50,7 +53,12 @@ public class HoverPreview: MonoBehaviour
     {
         ThisPreviewEnabled = ActivateInAwake;
     }
-            
+
+    void Start()
+    {
+        col = transform.GetComponent<BoxCollider>();
+    }
+
     void OnMouseEnter()
     {
         OverCollider = true;
@@ -77,22 +85,16 @@ public class HoverPreview: MonoBehaviour
         // 3) enable Preview game object
         previewGameObject.SetActive(true);
         // 4) disable if we have what to disable
-        if (TurnThisOffWhenPreviewing!=null)
-            TurnThisOffWhenPreviewing.SetActive(false); 
+        if (TurnThisOffWhenPreviewing != null)
+            TurnThisOffWhenPreviewing.SetActive(false);
         // 5) tween to target position
         previewGameObject.transform.localPosition = Vector3.zero;
         previewGameObject.transform.localScale = Vector3.one;
-        var halfCardHeight = new Vector3(0, 1 / 2);
-        var pointZeroScreen = Camera.main.ScreenToWorldPoint(Vector3.zero);
-        var bottomScreenY = new Vector3(0, pointZeroScreen.y);
-        var currentPosWithoutY = new Vector3(previewGameObject.transform.position.x, 0, previewGameObject.transform.position.z);
-        var hoverHeightParameter = new Vector3(0, -5f, 0);
-        var final = currentPosWithoutY + bottomScreenY + halfCardHeight + hoverHeightParameter;
         GameObject parent = previewGameObject.transform.parent.gameObject;
         objIndex = parent.transform.GetSiblingIndex();
         parent.transform.SetAsLastSibling();
         previewGameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
-        previewGameObject.transform.DOMove(final, 1f).SetEase(Ease.OutQuint);
+        previewGameObject.transform.DOMove(new Vector3(transform.position.x, transform.position.y + 150f, 0), 1f).SetEase(Ease.OutQuint);        
         previewGameObject.transform.DOScale(TargetScale, 1f).SetEase(Ease.OutQuint);
     }
 
@@ -115,6 +117,8 @@ public class HoverPreview: MonoBehaviour
             currentlyViewing.previewGameObject.SetActive(false);
             currentlyViewing.previewGameObject.transform.localScale = Vector3.one;
             currentlyViewing.previewGameObject.transform.localPosition = Vector3.zero;
+            GameObject parent = currentlyViewing.previewGameObject.transform.parent.gameObject;
+            parent.transform.SetSiblingIndex(objIndex);
             if (currentlyViewing.TurnThisOffWhenPreviewing!=null)
                 currentlyViewing.TurnThisOffWhenPreviewing.SetActive(true); 
         }
@@ -136,6 +140,4 @@ public class HoverPreview: MonoBehaviour
 
         return false;
     }
-
-   
 }

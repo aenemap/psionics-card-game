@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 378186080}
   - component: {fileID: 378186081}
   m_Layer: 5
-  m_Name: Hand
+  m_Name: HandArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -263,7 +263,7 @@ MonoBehaviour:
   Hand: {fileID: 378186077}
   cardWidth: 10
   bentAngle: 20
-  spacing: 50
+  spacing: 70
   height: 3
   cardsInHand: []
 --- !u!114 &378186080
@@ -302,10 +302,12 @@ GameObject:
   - component: {fileID: 413724777}
   - component: {fileID: 413724776}
   - component: {fileID: 413724778}
+  - component: {fileID: 413724781}
+  - component: {fileID: 413724780}
   m_Layer: 5
-  m_Name: Shields
+  m_Name: ShieldsArea
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -323,10 +325,10 @@ RectTransform:
   m_Father: {fileID: 2067209547}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.17568268, y: 0.6658892}
-  m_AnchorMax: {x: 0.82335836, y: 0.9305514}
-  m_AnchoredPosition: {x: 1.0361328, y: -0.18721008}
-  m_SizeDelta: {x: -1.6753492, y: 0.112524986}
+  m_AnchorMin: {x: 0.1814689, y: 0.6658892}
+  m_AnchorMax: {x: 0.82335836, y: 0.9324125}
+  m_AnchoredPosition: {x: -4.519348, y: 0.64219666}
+  m_SizeDelta: {x: 9.43584, y: 1.8080068}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &413724776
 MonoBehaviour:
@@ -378,6 +380,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fd8f1d7f83fbda4a82f07deec35c557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &413724780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 413724774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33016fd14761a99479a9632da1d6cdce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &413724781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 413724774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1e7d0eeb630d43409d469e6e4c63455, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shieldCards: []
 --- !u!1 &1063581291
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,7 +518,7 @@ GameObject:
   - component: {fileID: 1704926732}
   - component: {fileID: 1704926731}
   m_Layer: 5
-  m_Name: Talents
+  m_Name: TalentsArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -641,7 +668,6 @@ GameObject:
   - component: {fileID: 2008390583}
   - component: {fileID: 2008390582}
   - component: {fileID: 2008390581}
-  - component: {fileID: 2008390585}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -730,19 +756,6 @@ RectTransform:
   m_AnchoredPosition: {x: 524.5, y: 295}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2008390585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2008390580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66c290917f14bff4faeaf94662cea612, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  camera: {fileID: 57953869}
 --- !u!1 &2067209546
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandEvents : MonoBehaviour
+public class HandAreaEvents : MonoBehaviour
 {
-    public static HandEvents current;
+    public static HandAreaEvents current;
 
     private void Awake()
     {

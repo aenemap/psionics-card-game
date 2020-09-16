@@ -33,14 +33,14 @@ public class CardManager : MonoBehaviour
         Card findCard = GetCardsFromResource().Where(w => w.CardId == cardId).FirstOrDefault();
         card = GetTypeOfCard(findCard);
         var cardDisplay = card.GetComponent<CardDisplay>();
-        //var cardPreview = card.transform.Find("CardPreview");
-        //var cardPreviewDisplay = cardPreview.GetComponent<CardPreviewDisplay>();
+        var cardPreview = card.transform.Find("CardPreview");
+        var cardPreviewDisplay = cardPreview.GetComponent<CardPreviewDisplay>();
 
-        
+
         if (findCard != null)
         {
             cardDisplay.card = findCard;
-            //cardPreviewDisplay.card = findCard;
+            cardPreviewDisplay.card = findCard;
             GameObject singleCard = Instantiate(card, new Vector2(0, 0), Quaternion.identity);
             return singleCard;
         }
