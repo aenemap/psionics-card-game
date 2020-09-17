@@ -100,6 +100,7 @@ public class HandAreaCards : MonoBehaviour
             card.transform.position = position;
             card.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
 
+            VisualsEvents.current.UpdateDraggableOriginalPosition(card);
             offsetX += cardWidth + spacing;
 
         }

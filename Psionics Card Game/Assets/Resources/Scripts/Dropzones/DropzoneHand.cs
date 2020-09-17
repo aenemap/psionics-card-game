@@ -10,15 +10,18 @@ public class DropzoneHand : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     {
         //Debug.Log("HAND OnDrop " + gameObject.name);
         HandAreaEvents.current.AddCardToHand(eventData.pointerDrag);
+        VisualsEvents.current.UpdateDraggableOriginalPosition(eventData.pointerDrag);
+
+
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        //Debug.Log("HAND OnPointerEnter");
+        Debug.Log("HAND OnPointerEnter");
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        //Debug.Log("HAND OnPointerExit");
+        Debug.Log("HAND OnPointerExit");
     }
 }

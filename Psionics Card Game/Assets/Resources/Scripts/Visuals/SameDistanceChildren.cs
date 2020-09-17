@@ -7,35 +7,36 @@ using System.Collections.Generic;
 public class SameDistanceChildren : MonoBehaviour 
 {
 
-    public List<Transform> Children;
+    //public List<Transform> Children;
 
 	// Use this for initialization
-	void Awake () 
-    {
-        CalculateDistance();
-	}
+	//void Awake () 
+ //   {
+ //       CalculateDistance();
+	//}
 
     private void Start()
     {
+        VisualsEvents.current.onSameDistanceCalculate += CalculateDistance;
     }
 
-    public void CalculateDistance()
+    private void CalculateDistance(List<GameObject> cards)
     {
-        if (Children.Count > 0)
+        if (cards.Count > 0)
         {
-            Vector3 firstElementPos = Children[0].transform.position;
-            Vector3 lastElementPos = Children[Children.Count - 1].transform.position;
+            Vector3 firstElementPos = cards[0].transform.position;
+            Vector3 lastElementPos = cards[cards.Count - 1].transform.position;
 
             // dividing by Children.Length - 1 because for example: between 10 points that are 9 segments
-            float XDist = (lastElementPos.x - firstElementPos.x) / (float)(Children.Count - 1);
-            float YDist = (lastElementPos.y - firstElementPos.y) / (float)(Children.Count - 1);
-            float ZDist = (lastElementPos.z - firstElementPos.z) / (float)(Children.Count - 1);
+            float XDist = (lastElementPos.x - firstElementPos.x) / (float)(cards.Count - 1);
+            float YDist = (lastElementPos.y - firstElementPos.y) / (float)(cards.Count - 1);
+            float ZDist = (lastElementPos.z - firstElementPos.z) / (float)(cards.Count - 1);
 
             Vector3 Dist = new Vector3(XDist, YDist, ZDist);
 
-            for (int i = 1; i < Children.Count; i++)
+            for (int i = 1; i < cards.Count; i++)
             {
-                Children[i].transform.position = Children[i - 1].transform.position + Dist;
+                cards[i].transform.position = cards[i - 1].transform.position + Dist;
             }
         }
     }

@@ -13,6 +13,7 @@ public class ShieldAreaEvents : MonoBehaviour
     }
 
     public event Action<GameObject> onAddCardToShields;
+    public event Action<int> onRemoveCardFromShields;
 
 
     public void AddCardToShields(GameObject shieldCard)
@@ -20,6 +21,14 @@ public class ShieldAreaEvents : MonoBehaviour
         if (onAddCardToShields != null)
         {
             onAddCardToShields(shieldCard);
+        }
+    }
+
+    public void RemoveCardFromShields(int cardId)
+    {
+        if (onRemoveCardFromShields != null)
+        {
+            onRemoveCardFromShields(cardId);
         }
     }
 }

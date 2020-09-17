@@ -1,60 +1,77 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections;
-
-public class Draggable : MonoBehaviour 
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;
+public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public bool UsePointerDisplacement = true;
-    // PRIVATE FIELDS
-    // a flag to know if we are currently dragging this GameObject
-    private bool dragging = false;
-
-    // distance from the center of this Game Object to the point where we clicked to start dragging 
     private Vector3 pointerDisplacement = Vector3.zero;
-
-    // distance from camera to mouse on Z axis 
     private float zDisplacement;
-    //private Vector3 currentPosition;
 
-    // MONOBEHAVIOUR METHODS
-    void OnMouseDown()
+
+    //private Vector3 originalPosition;
+    //private Quaternion originalRotation;
+    private Vector3 _originalPosition;
+    public Vector3 originalPosition
     {
-        dragging = true;
-        HoverPreview.PreviewsAllowed = false;       // NEW LINE
-        zDisplacement = -Camera.main.transform.position.z + transform.position.z;
-        //currentPosition = transform.position;
-        transform.rotation = Quaternion.Euler(0, 0, 0);
-        transform.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        if (UsePointerDisplacement)
-            pointerDisplacement = -transform.position + MouseInWorldCoords();
-        else
-            pointerDisplacement = Vector3.zero;
+        get { return _originalPosition; }
+        set { _originalPosition = value; }
     }
 
-    // Update is called once per frame
-    void Update ()
+    private Quaternion _originalRotation;
+    public Quaternion originalRotation
     {
-        if (dragging)
-        { 
-            Vector3 mousePos = MouseInWorldCoords();
-            //Debug.Log(mousePos);
-            transform.position = new Vector3(mousePos.x - pointerDisplacement.x, mousePos.y - pointerDisplacement.y, transform.position.z);
-            
-        }
+        get { return _originalRotation; }
+        set { _originalRotation = value; }
     }
 
-    void OnMouseUp()
+    void Start()
     {
-        if (dragging)
+        originalPosition = this.transform.position;
+        originalRotation = this.transform.rotation;
+        VisualsEvents.current.onUpdateDraggableOriginalPosition += UpdateDraggableOriginalPosition;
+    }
+
+    private void UpdateDraggableOriginalPosition(GameObject card)
+    {
+        Draggable draggable = card.GetComponent<Draggable>();
+        if (draggable != null)
         {
-            dragging = false;
-            transform.GetComponent<CanvasGroup>().blocksRaycasts = true;
-            HoverPreview.PreviewsAllowed = true;       // NEW LINE
-            //transform.position = currentPosition;
+            draggable.originalPosition = card.transform.position;
+            draggable.originalRotation = card.transform.rotation;
         }
     }
-    
 
-    // returns mouse position in World coordinates for our GameObject to follow. 
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        Debug.Log("OnBeginDrag");
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
+        HoverPreview.PreviewsAllowed = false;
+        zDisplacement = -Camera.main.transform.position.z + transform.position.z;
+        pointerDisplacement = -transform.position + MouseInWorldCoords();
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        //Debug.Log("OnDrag");
+
+        Vector3 mousePos = MouseInWorldCoords();
+        this.transform.position = new Vector3(mousePos.x - pointerDisplacement.x, mousePos.y - pointerDisplacement.y, transform.position.z);
+        Debug.Log("POSITION =>" + this.transform.position);
+        Debug.Log("ORIGINAL POSITION =>" + originalPosition);
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        Debug.Log("OnEndDrag");
+        HoverPreview.PreviewsAllowed = true;
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
+        this.transform.position = originalPosition;
+        this.transform.rotation = originalRotation;
+    }
+
     private Vector3 MouseInWorldCoords()
     {
         var screenMousePos = Input.mousePosition;
@@ -62,5 +79,4 @@ public class Draggable : MonoBehaviour
         screenMousePos.z = zDisplacement;
         return Camera.main.ScreenToWorldPoint(screenMousePos);
     }
-
 }

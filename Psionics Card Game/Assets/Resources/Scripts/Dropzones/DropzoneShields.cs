@@ -15,7 +15,10 @@ public class DropzoneShields : MonoBehaviour, IPointerEnterHandler, IPointerExit
         //Debug.Log("Shields OnDrop " + gameObject.name);
         //eventData.pointerDrag.transform.SetParent(this.transform);
         ShieldAreaEvents.current.AddCardToShields(eventData.pointerDrag);
-        CreateSlotForCard(eventData.pointerDrag);
+        eventData.pointerDrag.transform.parent = this.gameObject.transform;
+        //CreateSlotForCard(eventData.pointerDrag);
+        VisualsEvents.current.UpdateDraggableOriginalPosition(eventData.pointerDrag);
+
         CardDisplay cardDisplay = eventData.pointerDrag.GetComponent<CardDisplay>();
         HandAreaEvents.current.RemoveCardFromHand(Convert.ToInt32(cardDisplay.CardId.text));
         HandAreaEvents.current.BendHand();
