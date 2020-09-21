@@ -13,7 +13,7 @@ public class VisualsEvents : MonoBehaviour
     }
 
     public event Action<List<GameObject>> onSameDistanceCalculate;
-    public event Action<GameObject> onUpdateDraggableOriginalPosition;
+    public event Action<GameObject, float, float> onUpdateDraggableOriginalPosition;
 
     public void SameDistanceCalculate(List<GameObject> cards)
     {
@@ -23,11 +23,12 @@ public class VisualsEvents : MonoBehaviour
         }
     }
 
-    public void UpdateDraggableOriginalPosition(GameObject card)
+    public void UpdateDraggableOriginalPosition(GameObject card, float xPos, float yPos)
     {
         if (onUpdateDraggableOriginalPosition != null)
         {
-            onUpdateDraggableOriginalPosition(card);
+            onUpdateDraggableOriginalPosition(card, xPos, yPos);
         }
     }
+
 }

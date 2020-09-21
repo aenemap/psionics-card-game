@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Diagnostics;
 using UnityEngine.UI;
 
 public class HandAreaCards : MonoBehaviour
@@ -30,7 +31,7 @@ public class HandAreaCards : MonoBehaviour
         HandAreaEvents.current.onRemoveCardFromHand += OnRemoveCardFromHand;
         HandAreaEvents.current.onAddCardToHand += OnAddCardToHand;
 
-        var deck = deckManager.GetDeckById(3);
+        var deck = deckManager.GetDeckById(1);
         if (deck != null)
         {
             foreach(Card card in deck.Deck)
@@ -50,8 +51,7 @@ public class HandAreaCards : MonoBehaviour
     private void OnAddCardToHand(GameObject card)
     {
         
-        cardsInHand.Add(card);
-        card.transform.SetParent(pivot.transform);
+        cardsInHand.Insert(0, card);
         Bent(cardsInHand);
     }
 
@@ -76,8 +76,9 @@ public class HandAreaCards : MonoBehaviour
 
         var fullAngle = -bentAngle;
         var anglePerCard = fullAngle / cards.Count;
-        var firstAngle = CalcFirstAngle(fullAngle);
-        var handWidth = CalcHandWidth(cards.Count);
+        var firstAngle = Utilities.CalcFirstAngle(fullAngle);
+        //var handWidth = CalcHandWidth(cards.Count);
+        var handWidth = Utilities.CalcAreaWidth(cards.Count, cardWidth, spacing);
 
         var offsetX = pivot.position.x - handWidth / 2;
 
@@ -99,8 +100,8 @@ public class HandAreaCards : MonoBehaviour
 
             card.transform.position = position;
             card.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
-
-            VisualsEvents.current.UpdateDraggableOriginalPosition(card);
+            card.transform.parent = this.transform;
+            VisualsEvents.current.UpdateDraggableOriginalPosition(card, -1f, -1f);
             offsetX += cardWidth + spacing;
 
         }
@@ -108,22 +109,5 @@ public class HandAreaCards : MonoBehaviour
 
     }
 
-    public static float CalcFirstAngle(float fullAngle)
-    {
-        var magicMathFactor = 0.1f;
-        return -(fullAngle / 2) + fullAngle * magicMathFactor;
-    }
-
-    private float CalcHandWidth(int quantityOfCards)
-    {
-        var widthCards = quantityOfCards * cardWidth;
-        var widthSpacing = (quantityOfCards - 1) * spacing;
-        return widthCards + widthSpacing;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+  
 }

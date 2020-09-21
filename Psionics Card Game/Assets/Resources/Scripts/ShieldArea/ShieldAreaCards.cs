@@ -1,13 +1,20 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class ShieldAreaCards : MonoBehaviour
 {
     public List<GameObject> shieldCards = new List<GameObject>();
-    // Start is called before the first frame update
+    public Transform pivot;
+
+    [Header("Placement Info")]
+    public float cardWidth;
+    public float spacing;
+    public float height;
     void Start()
     {
         ShieldAreaEvents.current.onAddCardToShields += OnAddCardToShields;
@@ -26,14 +33,26 @@ public class ShieldAreaCards : MonoBehaviour
 
     private void OnAddCardToShields(GameObject shieldCard)
     {
-        shieldCards.Add(shieldCard);
-        Debug.Log("Cards in Shields => " + shieldCards.Count.ToString());
-        VisualsEvents.current.SameDistanceCalculate(shieldCards);
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        shieldCards.Add(shieldCard);
+
+        var shieldsWidth = Utilities.CalcAreaWidth(shieldCards.Count, cardWidth, spacing);
+        var offSetX = pivot.position.x - shieldsWidth / 2;
+
+        for (int i = 0; i < shieldCards.Count; i++)
+        {
+            var card = shieldCards[i];
+            var xPos = offSetX + cardWidth / 2;
+            var yPos = pivot.position.y;
+            //var rotation = card.transform.rotation;
+            var position = new Vector3(xPos, yPos, card.transform.position.z);
+            card.transform.position = position;
+            //card.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
+            card.transform.parent = this.transform;
+            VisualsEvents.current.UpdateDraggableOriginalPosition(card, xPos, yPos);
+            offSetX += cardWidth + spacing;
+
+        }
+
     }
 }

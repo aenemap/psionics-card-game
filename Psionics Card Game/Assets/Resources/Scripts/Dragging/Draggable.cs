@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,9 +9,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private Vector3 pointerDisplacement = Vector3.zero;
     private float zDisplacement;
 
-
-    //private Vector3 originalPosition;
-    //private Quaternion originalRotation;
     private Vector3 _originalPosition;
     public Vector3 originalPosition
     {
@@ -25,26 +23,36 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         set { _originalRotation = value; }
     }
 
+    private Transform _originalParent;
+    public Transform originalParent
+    {
+        get { return _originalParent; }
+        set { _originalParent = value; }
+    }
+
+
+
     void Start()
     {
         originalPosition = this.transform.position;
         originalRotation = this.transform.rotation;
+        originalParent = this.transform.parent;
         VisualsEvents.current.onUpdateDraggableOriginalPosition += UpdateDraggableOriginalPosition;
     }
 
-    private void UpdateDraggableOriginalPosition(GameObject card)
+
+    private void UpdateDraggableOriginalPosition(GameObject card, float xPos, float yPos)
     {
         Draggable draggable = card.GetComponent<Draggable>();
         if (draggable != null)
         {
-            draggable.originalPosition = card.transform.position;
+            draggable.originalPosition = xPos >= 0 && yPos >= 0 ? new Vector3(xPos, yPos, card.transform.position.z) :   card.transform.position;
             draggable.originalRotation = card.transform.rotation;
         }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        Debug.Log("OnBeginDrag");
         GetComponent<CanvasGroup>().blocksRaycasts = false;
         HoverPreview.PreviewsAllowed = false;
         zDisplacement = -Camera.main.transform.position.z + transform.position.z;
@@ -59,17 +67,16 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         Vector3 mousePos = MouseInWorldCoords();
         this.transform.position = new Vector3(mousePos.x - pointerDisplacement.x, mousePos.y - pointerDisplacement.y, transform.position.z);
-        Debug.Log("POSITION =>" + this.transform.position);
-        Debug.Log("ORIGINAL POSITION =>" + originalPosition);
+        Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.forward, Color.red);
+
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log("OnEndDrag");
         HoverPreview.PreviewsAllowed = true;
         GetComponent<CanvasGroup>().blocksRaycasts = true;
-        this.transform.position = originalPosition;
-        this.transform.rotation = originalRotation;
+        eventData.pointerDrag.transform.DOMove(new Vector3(originalPosition.x, originalPosition.y, originalPosition.z), 0.5f).SetEase(Ease.OutQuint);
+
     }
 
     private Vector3 MouseInWorldCoords()
@@ -79,4 +86,5 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         screenMousePos.z = zDisplacement;
         return Camera.main.ScreenToWorldPoint(screenMousePos);
     }
+
 }
