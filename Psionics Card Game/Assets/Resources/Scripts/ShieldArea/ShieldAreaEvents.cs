@@ -7,7 +7,7 @@ public class ShieldAreaEvents : MonoBehaviour
 {
     public static ShieldAreaEvents current;
 
-    public void Awake()
+    public ShieldAreaEvents()
     {
         current = this;
     }

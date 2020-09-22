@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 public class HandAreaCards : MonoBehaviour
 {
-    public CardManager cardManager;
-    public DeckManager deckManager;
+    //public CardManager cardManager;
+    //public DeckManager deckManager;
     public Transform pivot;
     public GameObject Hand;
 
@@ -25,26 +25,31 @@ public class HandAreaCards : MonoBehaviour
     //private float spacing = -2;
     //private float height = 0.12f;
     // Start is called before the first frame update
-    void Start()
+
+    private void OnEnable()
     {
         HandAreaEvents.current.onBendHand += OnBendHand;
         HandAreaEvents.current.onRemoveCardFromHand += OnRemoveCardFromHand;
         HandAreaEvents.current.onAddCardToHand += OnAddCardToHand;
+    }
 
-        var deck = deckManager.GetDeckById(1);
-        if (deck != null)
-        {
-            foreach(Card card in deck.Deck)
-            {
-                GameObject crd = cardManager.GetCard(card.CardId);
-                cardsInHand.Add(crd);
-                crd.transform.SetParent(pivot.transform, false);
+    void Start()
+    {
+
+        //var deck = deckManager.GetDeckById(1);
+        //if (deck != null)
+        //{
+        //    foreach(Card card in deck.DeckList)
+        //    {
+        //        GameObject crd = cardManager.GetCard(card.CardId);
+        //        cardsInHand.Add(crd);
+        //        crd.transform.SetParent(pivot.transform, false);
                 
-            }
+        //    }
             
-            Bent(cardsInHand);
+        //    Bent(cardsInHand);
            
-        }
+        //}
 
     }
 
@@ -109,5 +114,12 @@ public class HandAreaCards : MonoBehaviour
 
     }
 
-  
+    private void OnDisable()
+    {
+        HandAreaEvents.current.onBendHand -= OnBendHand;
+        HandAreaEvents.current.onRemoveCardFromHand -= OnRemoveCardFromHand;
+        HandAreaEvents.current.onAddCardToHand -= OnAddCardToHand;
+    }
+
+
 }

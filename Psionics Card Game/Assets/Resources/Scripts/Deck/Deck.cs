@@ -4,25 +4,9 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Deck", menuName = "Deck")]
-public class Deck : DeckBase
+public class Deck : ScriptableObject
 {
-    public override void AddCardsToBottomOfDeck()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void AddCardsToTopOfDeck()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void DrawCard()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void ShuffleDeck()
-    {
-        throw new System.NotImplementedException();
-    }
+    public int DeckId;
+    public string DeckName;
+    public List<Card> DeckList;
 }

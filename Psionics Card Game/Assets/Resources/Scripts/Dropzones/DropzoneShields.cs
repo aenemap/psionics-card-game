@@ -14,9 +14,9 @@ public class DropzoneShields : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnDrop(PointerEventData eventData)
     {   
         ShieldAreaEvents.current.AddCardToShields(eventData.pointerDrag);
-        eventData.pointerDrag.transform.parent = this.gameObject.transform;
+        eventData.pointerDrag.transform.parent = this.transform;
         //ShieldAreaCards shieldAreaCards = this.transform.GetComponent<ShieldAreaCards>();
-        eventData.pointerDrag.transform.DORotate(new Vector3(0, 180, 0), 0.5f).SetEase(Ease.OutQuint);
+        //eventData.pointerDrag.transform.DORotate(new Vector3(0, 180, 0), 0.5f).SetEase(Ease.OutQuint);
 
         CardDisplay cardDisplay = eventData.pointerDrag.GetComponent<CardDisplay>();
         HandAreaEvents.current.RemoveCardFromHand(Convert.ToInt32(cardDisplay.CardId.text));
@@ -24,12 +24,12 @@ public class DropzoneShields : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     }
 
-    private void CreateSlotForCard(GameObject card)
-    {
-        GameObject slot = new GameObject("Slot");
-        slot.transform.parent = this.gameObject.transform;
-        card.transform.parent = slot.transform;
-    }
+    //private void CreateSlotForCard(GameObject card)
+    //{
+    //    GameObject slot = new GameObject("Slot");
+    //    slot.transform.parent = this.gameObject.transform;
+    //    card.transform.parent = slot.transform;
+    //}
 
     public void OnPointerEnter(PointerEventData eventData)
     {

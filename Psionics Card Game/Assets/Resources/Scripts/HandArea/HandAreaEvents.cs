@@ -7,7 +7,7 @@ public class HandAreaEvents : MonoBehaviour
 {
     public static HandAreaEvents current;
 
-    private void Awake()
+    public HandAreaEvents()
     {
         current = this;
     }
@@ -26,17 +26,11 @@ public class HandAreaEvents : MonoBehaviour
 
     public void RemoveCardFromHand(int cardId)
     {
-        if(onRemoveCardFromHand != null)
-        {
-            onRemoveCardFromHand(cardId);
-        }
+        onRemoveCardFromHand?.Invoke(cardId);
     }
 
     public void AddCardToHand(GameObject card)
     {
-        if (onAddCardToHand != null)
-        {
-            onAddCardToHand(card);
-        }
+        onAddCardToHand?.Invoke(card);
     }
 }

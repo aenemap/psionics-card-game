@@ -10,7 +10,7 @@ public class DeckDisplay : MonoBehaviour
     public Text CardsInDeck;
     void Start()
     {
-        foreach(var card in deck.Deck)
+        foreach(var card in deck.DeckList)
         {
             CardsInDeck.text += card.CardName + "\n";
         }

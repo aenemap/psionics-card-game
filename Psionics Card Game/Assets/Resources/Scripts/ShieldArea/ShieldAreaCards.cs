@@ -15,10 +15,16 @@ public class ShieldAreaCards : MonoBehaviour
     public float cardWidth;
     public float spacing;
     public float height;
-    void Start()
+
+    private void OnEnable()
     {
         ShieldAreaEvents.current.onAddCardToShields += OnAddCardToShields;
         ShieldAreaEvents.current.onRemoveCardFromShields += OnRemoveCardFromShields;
+    }
+
+    void Start()
+    {
+        
     }
 
     private void OnRemoveCardFromShields(int cardId)
@@ -42,17 +48,28 @@ public class ShieldAreaCards : MonoBehaviour
         for (int i = 0; i < shieldCards.Count; i++)
         {
             var card = shieldCards[i];
+            CardDisplay cardDisplay = card.transform.GetComponent<CardDisplay>();
+            if (card.transform.rotation.y != 1)
+            {
+                //card.transform.rotation = Quaternion.Euler(0, 180, 0);
+                card.transform.DORotate(new Vector3(0, 180, 0), 0.3f).SetEase(Ease.OutQuint);
+            }
             var xPos = offSetX + cardWidth / 2;
             var yPos = pivot.position.y;
             //var rotation = card.transform.rotation;
             var position = new Vector3(xPos, yPos, card.transform.position.z);
             card.transform.position = position;
-            //card.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
             card.transform.parent = this.transform;
             VisualsEvents.current.UpdateDraggableOriginalPosition(card, xPos, yPos);
             offSetX += cardWidth + spacing;
 
         }
 
+    }
+
+    private void OnDisable()
+    {
+        ShieldAreaEvents.current.onAddCardToShields -= OnAddCardToShields;
+        ShieldAreaEvents.current.onRemoveCardFromShields -= OnRemoveCardFromShields;
     }
 }
