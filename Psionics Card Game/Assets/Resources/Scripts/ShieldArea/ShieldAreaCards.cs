@@ -49,10 +49,19 @@ public class ShieldAreaCards : MonoBehaviour
         {
             var card = shieldCards[i];
             CardDisplay cardDisplay = card.transform.GetComponent<CardDisplay>();
+            CardRotation cardRotation = card.transform.GetComponent<CardRotation>();
+
+            //CardRotation Script
+            //if(cardRotation.cardState == Enums.CardState.FaceUp)
+            //{
+            //    cardRotation.StartFaceDown();
+            //}
+
+            //BetterCardRotation Script
             if (card.transform.rotation.y != 1)
             {
                 //card.transform.rotation = Quaternion.Euler(0, 180, 0);
-                card.transform.DORotate(new Vector3(0, 180, 0), 0.3f).SetEase(Ease.OutQuint);
+                card.transform.DOLocalRotate(new Vector3(0, 180, 0), 0.3f);
             }
             var xPos = offSetX + cardWidth / 2;
             var yPos = pivot.position.y;

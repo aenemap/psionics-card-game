@@ -47,3 +47,4 @@ MonoBehaviour:
   shieldAbsorbingCard: {fileID: 5508129005809944509, guid: c9572df6c57655c45ae904e2a1f7a2c3, type: 3}
   talentCard: {fileID: 4572690453058151640, guid: 131085cf59c0f9642974f3bab3d1aba5, type: 3}
   eventCard: {fileID: 8653782343194278731, guid: d3257fc6448542a479faec803309696d, type: 3}
+  testCard: {fileID: 6400907138460958800, guid: b867469c747b04b45b946ba708089d97, type: 3}

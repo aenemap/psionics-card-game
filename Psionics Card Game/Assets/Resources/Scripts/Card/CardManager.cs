@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using TMPro;
 using UnityEngine;
 
 public class CardManager : MonoBehaviour
@@ -10,6 +11,7 @@ public class CardManager : MonoBehaviour
     public GameObject shieldAbsorbingCard;
     public GameObject talentCard;
     public GameObject eventCard;
+    public GameObject testCard;
 
     private GameObject card;
     public List<GameObject> GetAllCards()
@@ -28,9 +30,9 @@ public class CardManager : MonoBehaviour
         return allCards;
     }
 
-    public GameObject GetCard (int cardId)
+    public GameObject GetCard (Card crd)
     {
-        Card findCard = GetCardsFromResource().Where(w => w.CardId == cardId).FirstOrDefault();
+        Card findCard = GetCardsFromResource().Where(w => w.CardId == crd.CardId).FirstOrDefault();
         card = GetTypeOfCard(findCard);
         var cardDisplay = card.GetComponent<CardDisplay>();
         var cardPreview = card.transform.Find("CardPreview");
@@ -42,6 +44,14 @@ public class CardManager : MonoBehaviour
             cardDisplay.card = findCard;
             cardPreviewDisplay.card = findCard;
             GameObject singleCard = Instantiate(card, new Vector2(0, 0), Quaternion.identity);
+            if (crd.IsFaceDown)
+            {
+
+                singleCard.transform.rotation = Quaternion.Euler(0, 180, 0);
+
+                //CardRotation Script
+                //singleCard.transform.GetComponent<CardRotation>().cardState = Enums.CardState.FaceDown;
+            }
             return singleCard;
         }
         return null;
@@ -60,6 +70,9 @@ public class CardManager : MonoBehaviour
 
         if (card.CardType == Enums.CardType.Event)
             returnCard = eventCard;
+
+        if (card.CardType == Enums.CardType.Test)
+            returnCard = testCard;
 
         return returnCard;
     }

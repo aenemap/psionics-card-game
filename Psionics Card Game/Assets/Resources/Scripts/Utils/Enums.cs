@@ -8,7 +8,8 @@ public static class Enums
     {
         Shield,
         Event,
-        Talent
+        Talent,
+        Test
     }
 
     public enum CardSubType
@@ -22,6 +23,12 @@ public static class Enums
     {
         TopOfDeck,
         BottomOfDeck
+    }
+
+    public enum CardState
+    {
+        FaceUp,
+        FaceDown
     }
 
 }

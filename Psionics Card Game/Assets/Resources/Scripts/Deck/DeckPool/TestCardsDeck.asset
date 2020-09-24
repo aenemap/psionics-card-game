@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0150f91a87220874795e54de09f0d909, type: 3}
+  m_Name: TestCardsDeck
+  m_EditorClassIdentifier: 
+  DeckId: 5
+  DeckName: TestCardsDeck
+  DeckList:
+  - {fileID: 11400000, guid: 8dcabc3ebbcf5fe4a9b08c8cd95b7638, type: 2}
+  - {fileID: 11400000, guid: 1da18e46fd23e9b4d9615db8781ce588, type: 2}
+  - {fileID: 11400000, guid: 3393adc1e62b5c946babdd8ec3ac4c73, type: 2}
+  - {fileID: 11400000, guid: 2abb5e45575f427418b50c75040dff79, type: 2}
+  - {fileID: 11400000, guid: dc0ef08311d790b41a524d1e07efef88, type: 2}
+  - {fileID: 11400000, guid: a96f84ca077769447b0a0806ffef7f80, type: 2}

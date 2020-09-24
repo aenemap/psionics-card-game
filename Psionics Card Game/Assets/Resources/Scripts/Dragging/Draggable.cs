@@ -75,6 +75,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         HoverPreview.PreviewsAllowed = true;
         GetComponent<CanvasGroup>().blocksRaycasts = true;
+        eventData.pointerDrag.transform.rotation = originalRotation;
         eventData.pointerDrag.transform.DOMove(new Vector3(originalPosition.x, originalPosition.y, originalPosition.z), 0.5f).SetEase(Ease.OutQuint);
 
     }

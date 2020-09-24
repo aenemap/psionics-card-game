@@ -92,6 +92,9 @@ public class HandAreaCards : MonoBehaviour
             var card = cards[i];
             card.transform.SetSiblingIndex(i);
 
+            //CardRotation Script
+            //card.transform.GetComponent<CardRotation>().cardState = Enums.CardState.FaceUp;
+
             var angleTwist = firstAngle + i * anglePerCard;
 
             var xPos = offsetX + cardWidth / 2;
@@ -105,7 +108,7 @@ public class HandAreaCards : MonoBehaviour
 
             card.transform.position = position;
             card.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
-            card.transform.parent = this.transform;
+            card.transform.parent = pivot.transform;
             VisualsEvents.current.UpdateDraggableOriginalPosition(card, -1f, -1f);
             offsetX += cardWidth + spacing;
 
