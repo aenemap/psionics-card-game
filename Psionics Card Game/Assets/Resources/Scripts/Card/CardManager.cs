@@ -44,14 +44,14 @@ public class CardManager : MonoBehaviour
             cardDisplay.card = findCard;
             cardPreviewDisplay.card = findCard;
             GameObject singleCard = Instantiate(card, new Vector2(0, 0), Quaternion.identity);
-            if (crd.IsFaceDown)
-            {
+            //if (crd.IsFaceDown)
+            //{
 
-                singleCard.transform.rotation = Quaternion.Euler(0, 180, 0);
+            //    //singleCard.transform.rotation = Quaternion.Euler(0, 180, 0);
 
-                //CardRotation Script
-                //singleCard.transform.GetComponent<CardRotation>().cardState = Enums.CardState.FaceDown;
-            }
+            //    //CardRotation Script
+            //    singleCard.transform.GetComponent<CardRotation>().cardState = Enums.CardState.FaceDown;
+            //}
             return singleCard;
         }
         return null;

@@ -90,10 +90,32 @@ public class HandAreaCards : MonoBehaviour
         for (var i = 0; i < cards.Count; i++ )
         {
             var card = cards[i];
-            card.transform.SetSiblingIndex(i);
 
-            //CardRotation Script
-            //card.transform.GetComponent<CardRotation>().cardState = Enums.CardState.FaceUp;
+            CardRotation cardRotation = card.transform.GetComponent<CardRotation>();
+            if (cardRotation.cardState == Enums.CardState.FaceDown)
+            {
+                cardRotation.cardState = Enums.CardState.FaceUp;
+                cardRotation.Flip();
+            }
+
+
+            //card.transform.SetSiblingIndex(i);
+            //CardRotation2 cardRotation = card.transform.GetComponent<CardRotation2>();
+            //cardRotation.StartFlip();
+
+            ////CardRotation Script
+            //CardRotation cardRotation = card.transform.GetComponent<CardRotation>();
+            //if (cardRotation != null)
+            //{
+            //    cardRotation.cardState = Enums.CardState.FaceUp;
+            //    cardRotation.SetCardState();
+            //    //if (cardRotation.cardState == Enums.CardState.FaceDown)
+            //    //{
+            //    //    cardRotation.StartFaceUp();
+            //    //}
+
+            //}
+
 
             var angleTwist = firstAngle + i * anglePerCard;
 

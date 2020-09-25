@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,16 +7,25 @@ using static Enums;
 
 public class CardRotation : MonoBehaviour
 {
-    public GameObject cardFront;
     public GameObject cardBack;
     public CardState cardState = CardState.FaceUp;
     public float time = 0.1f;
-    private bool isFlipActive = false;
+
+    private bool cardStateChangeDone;
+
+    private bool _isFlipActive;
+
+    public bool IsFlipActive
+    {
+        get { return _isFlipActive; }
+        set { _isFlipActive = value; }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        Init();
+        IsFlipActive = false;
+        cardStateChangeDone = false;
     }
 
     //private void OnMouseDown()
@@ -30,61 +40,71 @@ public class CardRotation : MonoBehaviour
     //    }
     //}
 
-    public void Init()
+    public void Flip()
     {
-        if (cardState == CardState.FaceUp)
+        if (!cardStateChangeDone)
         {
-            cardFront.transform.eulerAngles = Vector3.zero;
-            //cardBack.transform.eulerAngles = new Vector3(0, 90, 0);
-            cardBack.SetActive(false);
-        }
-        else
-        {
-            cardFront.transform.eulerAngles = new Vector3(0, 90, 0);
-            //cardBack.transform.eulerAngles = Vector3.zero;
-            cardBack.SetActive(true);
+            if (cardState == CardState.FaceUp)
+            {                
+                cardBack.SetActive(false);
+            }
+            else
+            {                
+                cardBack.SetActive(true);
+            }
+            cardStateChangeDone = true;
         }
     }
 
     public void StartFaceDown()
     {
-        if (isFlipActive)
+        if (IsFlipActive)
             return;
         StartCoroutine(ToFaceDown());
     }
 
     public void StartFaceUp()
     {
-        if (isFlipActive)
+        if (IsFlipActive)
             return;
         StartCoroutine(ToFaceUp());
     }
 
     IEnumerator ToFaceDown()
     {
-        isFlipActive = true;
-        cardFront.transform.DORotate(new Vector3(0, 90, 0), time).OnComplete(() => {
-            cardFront.SetActive(false);
-            cardBack.SetActive(true);
+        HoverPreview.PreviewsAllowed = false;
+        IsFlipActive = true;
+        cardStateChangeDone = false;
+        transform.DORotate(new Vector3(0, 180, 0), time).OnUpdate(() =>
+        {
+            if (transform.rotation.eulerAngles.y >= 90)
+            {
+                cardState = CardState.FaceDown;
+                Flip();
+            }
         });
         for (float i = time; i >= 0; i -= Time.deltaTime)
-            yield return 0;        
-        cardBack.transform.DORotate(new Vector3(0, 0, 0), time);
-        isFlipActive = false;
-        cardState = CardState.FaceDown;
+            yield return 0;
+        HoverPreview.PreviewsAllowed = true;
+        cardStateChangeDone = false;
+        IsFlipActive = false;
+
     }
 
     IEnumerator ToFaceUp()
     {
-        isFlipActive = true;
-        cardBack.transform.DORotate(new Vector3(0, 90, 0), time).OnComplete(() => {
-            cardBack.SetActive(false);
-            cardFront.SetActive(true);
+        IsFlipActive = true;
+        transform.DORotate(new Vector3(0, 360, 0), time).OnUpdate(() =>
+        {
+            if (transform.rotation.eulerAngles.y >= 270)
+            {
+                cardState = CardState.FaceUp;
+                Flip();
+            }
         });
         for (float i = time; i >= 0; i -= Time.deltaTime)
             yield return 0;
-        cardFront.transform.DORotate(new Vector3(0, 0, 0), time);
-        isFlipActive = false;
-        cardState = CardState.FaceUp;
+        cardStateChangeDone = false;
+        IsFlipActive = false;
     }
 }

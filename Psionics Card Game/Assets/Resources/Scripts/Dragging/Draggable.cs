@@ -88,4 +88,13 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         return Camera.main.ScreenToWorldPoint(screenMousePos);
     }
 
+    //public void OnPointerEnter(PointerEventData eventData)
+    //{
+    //    Debug.Log("Draggable => OnPointerEnter");
+    //}
+
+    //public void OnPointerExit(PointerEventData eventData)
+    //{
+    //    Debug.Log("Draggable => OnPointerExit");
+    //}
 }

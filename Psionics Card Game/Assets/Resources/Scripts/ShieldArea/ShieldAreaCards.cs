@@ -48,27 +48,36 @@ public class ShieldAreaCards : MonoBehaviour
         for (int i = 0; i < shieldCards.Count; i++)
         {
             var card = shieldCards[i];
+
             CardDisplay cardDisplay = card.transform.GetComponent<CardDisplay>();
             CardRotation cardRotation = card.transform.GetComponent<CardRotation>();
+            if (cardRotation.cardState == Enums.CardState.FaceUp)
+            {
+                cardRotation.StartFaceDown();
+            }
+
+            //CardRotation2 cardRotation = card.transform.GetComponent<CardRotation2>();
+            //cardRotation.StartFlip();
 
             //CardRotation Script
-            //if(cardRotation.cardState == Enums.CardState.FaceUp)
+            //CardRotation cardRotation = card.transform.GetComponent<CardRotation>();
+            //if (cardRotation.cardState == Enums.CardState.FaceUp)
             //{
             //    cardRotation.StartFaceDown();
             //}
 
-            //BetterCardRotation Script
-            if (card.transform.rotation.y != 1)
-            {
-                //card.transform.rotation = Quaternion.Euler(0, 180, 0);
-                card.transform.DOLocalRotate(new Vector3(0, 180, 0), 0.3f);
-            }
+            ////BetterCardRotation Script
+            //if (card.transform.rotation.y != 1)
+            //{
+            //    card.transform.rotation = Quaternion.Euler(0, 180, 0);
+            //    card.transform.DOLocalRotate(new Vector3(0, 180, 0), 0.3f);
+            //}
             var xPos = offSetX + cardWidth / 2;
             var yPos = pivot.position.y;
             //var rotation = card.transform.rotation;
             var position = new Vector3(xPos, yPos, card.transform.position.z);
             card.transform.position = position;
-            card.transform.parent = this.transform;
+            card.transform.parent = this.pivot.transform;
             VisualsEvents.current.UpdateDraggableOriginalPosition(card, xPos, yPos);
             offSetX += cardWidth + spacing;
 

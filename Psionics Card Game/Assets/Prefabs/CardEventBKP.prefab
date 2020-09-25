@@ -330,6 +330,7 @@ GameObject:
   - component: {fileID: 6770951508864610396}
   - component: {fileID: 7021839254988406646}
   - component: {fileID: 5153247869250374974}
+  - component: {fileID: 615390526588329857}
   m_Layer: 5
   m_Name: Cardback
   m_TagString: Untagged
@@ -395,6 +396,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &615390526588329857
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1746958062276511455}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &2422858208323530922
 GameObject:
   m_ObjectHideFlags: 0
@@ -1294,8 +1307,8 @@ GameObject:
   - component: {fileID: 6523662852381121212}
   - component: {fileID: 1505143776164291204}
   - component: {fileID: 8954321249401229421}
-  - component: {fileID: 412559812404275258}
-  - component: {fileID: 7200645365922662086}
+  - component: {fileID: 1401727851994494342}
+  - component: {fileID: 2215507131225608252}
   m_Layer: 0
   m_Name: CardEventBKP
   m_TagString: Untagged
@@ -1378,7 +1391,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &412559812404275258
+--- !u!114 &1401727851994494342
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1391,11 +1404,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TurnThisOffWhenPreviewing: {fileID: 6400907140393109921}
-  TargetPosition: {x: 0, y: 3, z: 0}
+  TargetPosition: {x: 0, y: 2.5, z: 0}
   TargetScale: 2.5
   previewGameObject: {fileID: 4673359140180262258}
   ActivateInAwake: 1
---- !u!114 &7200645365922662086
+--- !u!114 &2215507131225608252
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1407,10 +1420,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 088545f1af8f6514794e6aaf1a8f5e14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardFront: {fileID: 6400907140393109921}
   cardBack: {fileID: 1746958062276511455}
   cardState: 0
-  time: 0.05
+  time: 0.1
 --- !u!1 &6400907138573726130
 GameObject:
   m_ObjectHideFlags: 0

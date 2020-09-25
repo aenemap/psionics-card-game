@@ -10,6 +10,9 @@ public class DropzoneHand : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     {
         //Debug.Log("HAND OnDrop " + gameObject.name);
         HandAreaEvents.current.AddCardToHand(eventData.pointerDrag);
+        CardDisplay cardDisplay = eventData.pointerDrag.transform.GetComponent<CardDisplay>();
+        if (cardDisplay.card.CardType == Enums.CardType.Shield)
+            ShieldAreaEvents.current.RemoveCardFromShields(cardDisplay.card.CardId);
 
 
     }

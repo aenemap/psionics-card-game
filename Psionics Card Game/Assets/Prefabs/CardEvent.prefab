@@ -1843,7 +1843,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8653782343194278730}
-  - component: {fileID: 1766657656476763408}
+  - component: {fileID: 4246772981546377266}
   - component: {fileID: 1980232182992760704}
   - component: {fileID: 8810249083605787047}
   - component: {fileID: 3760407120289700255}
@@ -1873,7 +1873,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1766657656476763408
+--- !u!114 &4246772981546377266
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1882,13 +1882,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8653782343194278731}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da11a04eb5e45a64290a8d85bc3ac65e, type: 3}
+  m_Script: {fileID: 11500000, guid: 088545f1af8f6514794e6aaf1a8f5e14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CardFront: {fileID: 8653782345095754429}
-  CardBack: {fileID: 9024015829567212359}
-  targetFacePoint: {fileID: 7604257095828025395}
-  col: {fileID: 1980232182992760704}
+  cardBack: {fileID: 4103499483984248260}
+  cardState: 0
+  time: 0.1
 --- !u!65 &1980232182992760704
 BoxCollider:
   m_ObjectHideFlags: 0

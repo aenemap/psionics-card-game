@@ -2,22 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class DeckManager : MonoBehaviour, IPointerDownHandler
 {
     public CardManager cardManager;
-    private GameObject deck;
+    private GameObject deck = null;
 
     private List<Card> cardsInDeck = new List<Card>();
 
-
+    public float time = 0.1f;
     private int initialDealOfCards = 5;
 
     void Start()
     {
-        var playerDeck = GetDeckById(3);
+        var playerDeck = GetDeckById(1);
         if (playerDeck != null)
         {
             foreach(Card crd in playerDeck.DeckList)
@@ -28,9 +29,9 @@ public class DeckManager : MonoBehaviour, IPointerDownHandler
             for (int i = 0; i < initialDealOfCards; i++)
             {
                 GameObject card = cardManager.GetCard(cardsInDeck[i]);
+                if (cardsInDeck.Count > 0)
+                    cardsInDeck.RemoveAt(0);
                 HandAreaEvents.current.AddCardToHand(card);
-                if (cardsInDeck.Count > (initialDealOfCards * 2))
-                    cardsInDeck = cardsInDeck.Where(w => w.CardId != cardsInDeck[i].CardId).ToList();
             }
         }
     }
@@ -40,22 +41,21 @@ public class DeckManager : MonoBehaviour, IPointerDownHandler
         if (cardsInDeck.Count > 0)
         {
             GameObject card = cardManager.GetCard(cardsInDeck[0]);
-            card.transform.parent = this.transform.parent;
-            if (cardsInDeck.Count == 1)
-                this.gameObject.SetActive(false);
-            Sequence dealCardSequence = DOTween.Sequence();
-            //CardRotation Script
-            //dealCardSequence.Append(card.transform.DOMove(new Vector3(120, 97, card.transform.position.z), 0.5f).SetEase(Ease.OutQuint).OnComplete(() => {
-            //    card.transform.GetComponent<CardRotation>().StartFaceUp();
-            //}));
-            dealCardSequence.Append(card.transform.DOMove(new Vector3(120, 97, card.transform.position.z), 0.5f).SetEase(Ease.OutQuint));
-            dealCardSequence.Append(card.transform.DOMove(new Vector3(533, -130, card.transform.position.z), 0.1f).SetEase(Ease.OutQuint));
-            dealCardSequence.OnComplete(() => { 
-                HandAreaEvents.current.AddCardToHand(card);
+            if (cardsInDeck.Count > 0)
                 cardsInDeck.RemoveAt(0);
+            if (cardsInDeck.Count == 0)
+                this.gameObject.SetActive(false);
+            card.transform.parent = this.transform.parent;
+            card.transform.position = this.transform.position;
+            Sequence dealCardSequence = DOTween.Sequence();
+            dealCardSequence.Append(card.transform.DOLocalMove(new Vector3(-734, 139, card.transform.position.z), 0.5f).SetEase(Ease.OutQuint));
+            dealCardSequence.Append(card.transform.DOLocalMove(new Vector3(0, -166, card.transform.position.z), 0.5f).SetEase(Ease.OutQuint));
+            dealCardSequence.OnComplete(() =>
+            {
+                HandAreaEvents.current.AddCardToHand(card);
             });
-        }
-            
+        }        
+
     }
 
     public List<GameObject> GetAllDecks()
