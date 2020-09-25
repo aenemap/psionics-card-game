@@ -1,14 +1,11 @@
-﻿using DG.Tweening;
-using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class ShieldAreaCards : MonoBehaviour
+public class TalentAreaCards : MonoBehaviour
 {
-    public List<GameObject> shieldCards = new List<GameObject>();
+    public List<GameObject> talentCards = new List<GameObject>();
     public Transform pivot;
 
     [Header("Placement Info")]
@@ -18,36 +15,36 @@ public class ShieldAreaCards : MonoBehaviour
 
     private void OnEnable()
     {
-        ShieldAreaEvents.current.onAddCardToShields += OnAddCardToShields;
-        ShieldAreaEvents.current.onRemoveCardFromShields += OnRemoveCardFromShields;
+        TalentAreaEvents.current.onAddCardToTalents += OnAddCardToTalents;
+        TalentAreaEvents.current.onRemoveCardFromTalents += OnRemoveCardFromTalents;
     }
 
     void Start()
     {
-        
+
     }
 
-    private void OnRemoveCardFromShields(int cardId)
+    private void OnRemoveCardFromTalents(int cardId)
     {
         //TODO: Check if the card needs to be destroyed.
-        shieldCards = shieldCards.Where(w =>
+        talentCards = talentCards.Where(w =>
         {
             CardDisplay cardDisplay = w.transform.GetComponent<CardDisplay>();
             return cardDisplay.CardId.text != cardId.ToString();
         }).ToList();
     }
 
-    private void OnAddCardToShields(GameObject shieldCard)
+    private void OnAddCardToTalents(GameObject talentCard)
     {
 
-        shieldCards.Add(shieldCard);
+        talentCards.Add(talentCard);
 
-        var shieldsWidth = Utilities.CalcAreaWidth(shieldCards.Count, cardWidth, spacing);
-        var offSetX = pivot.position.x - shieldsWidth / 2;
+        var talentWidth = Utilities.CalcAreaWidth(talentCards.Count, cardWidth, spacing);
+        var offSetX = pivot.position.x - talentWidth / 2;
 
-        for (int i = 0; i < shieldCards.Count; i++)
+        for (int i = 0; i < talentCards.Count; i++)
         {
-            var card = shieldCards[i];
+            var card = talentCards[i];
 
             CardDisplay cardDisplay = card.transform.GetComponent<CardDisplay>();
             CardRotation cardRotation = card.transform.GetComponent<CardRotation>();
@@ -70,7 +67,7 @@ public class ShieldAreaCards : MonoBehaviour
 
     private void OnDisable()
     {
-        ShieldAreaEvents.current.onAddCardToShields -= OnAddCardToShields;
-        ShieldAreaEvents.current.onRemoveCardFromShields -= OnRemoveCardFromShields;
+        ShieldAreaEvents.current.onAddCardToShields -= OnAddCardToTalents;
+        ShieldAreaEvents.current.onRemoveCardFromShields -= OnRemoveCardFromTalents;
     }
 }

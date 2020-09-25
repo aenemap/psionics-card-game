@@ -98,29 +98,8 @@ public class HandAreaCards : MonoBehaviour
                 cardRotation.cardState = Enums.CardState.FaceUp;
                 if (cardRotation.CardStateChangeDone)
                     cardRotation.CardStateChangeDone = false;
-                //if (cardRotation.cardFront.transform.rotation.eulerAngles.y == 0)
-                //    cardRotation. cardFront.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
                 cardRotation.Flip();
             }
-
-
-            //card.transform.SetSiblingIndex(i);
-            //CardRotation2 cardRotation = card.transform.GetComponent<CardRotation2>();
-            //cardRotation.StartFlip();
-
-            ////CardRotation Script
-            //CardRotation cardRotation = card.transform.GetComponent<CardRotation>();
-            //if (cardRotation != null)
-            //{
-            //    cardRotation.cardState = Enums.CardState.FaceUp;
-            //    cardRotation.SetCardState();
-            //    //if (cardRotation.cardState == Enums.CardState.FaceDown)
-            //    //{
-            //    //    cardRotation.StartFaceUp();
-            //    //}
-
-            //}
-
 
             var angleTwist = firstAngle + i * anglePerCard;
 
