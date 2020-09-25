@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Diagnostics;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class HandAreaCards : MonoBehaviour
 {
@@ -95,6 +96,10 @@ public class HandAreaCards : MonoBehaviour
             if (cardRotation.cardState == Enums.CardState.FaceDown)
             {
                 cardRotation.cardState = Enums.CardState.FaceUp;
+                if (cardRotation.CardStateChangeDone)
+                    cardRotation.CardStateChangeDone = false;
+                //if (cardRotation.cardFront.transform.rotation.eulerAngles.y == 0)
+                //    cardRotation. cardFront.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
                 cardRotation.Flip();
             }
 
@@ -128,8 +133,18 @@ public class HandAreaCards : MonoBehaviour
             var rotation = new Vector3(0, 0, angleTwist);
             var position = new Vector3(xPos, yPos, card.transform.position.z);
 
-            card.transform.position = position;
+            //card.transform.position = position;
             card.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
+            card.transform.DOMove(position, 1f).SetEase(Ease.OutQuint);
+            GameObject cardFront = cardRotation.cardFront;
+            if (cardFront.transform.rotation.eulerAngles.y == 180)
+            {
+                cardFront.transform.rotation = Quaternion.Euler(
+                        rotation.x,
+                        0,
+                        rotation.z
+                    );
+            }
             card.transform.parent = pivot.transform;
             VisualsEvents.current.UpdateDraggableOriginalPosition(card, -1f, -1f);
             offsetX += cardWidth + spacing;

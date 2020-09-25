@@ -2731,6 +2731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardBack: {fileID: 908082387791282482}
+  cardFront: {fileID: 5508129005587205708}
   cardState: 0
   time: 0.1
 --- !u!65 &3392219566173311862

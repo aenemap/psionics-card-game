@@ -1,10 +1,12 @@
 ﻿using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class DeckManager : MonoBehaviour, IPointerDownHandler
 {
@@ -15,23 +17,33 @@ public class DeckManager : MonoBehaviour, IPointerDownHandler
 
     public float time = 0.1f;
     private int initialDealOfCards = 5;
+    private float delayBeforeDealCards = 2f;
+    private float timeElapsed;
+    private bool initialDeal = false;
 
     void Start()
     {
-        var playerDeck = GetDeckById(1);
-        if (playerDeck != null)
+        
+    }
+
+    void Update()
+    {
+        if (SceneManager.GetActiveScene().isLoaded)
         {
-            foreach(Card crd in playerDeck.DeckList)
+            timeElapsed += Time.deltaTime;
+            if (timeElapsed > delayBeforeDealCards && !initialDeal)
             {
-                crd.IsFaceDown = true;
-                cardsInDeck.Add(crd);
-            }
-            for (int i = 0; i < initialDealOfCards; i++)
-            {
-                GameObject card = cardManager.GetCard(cardsInDeck[i]);
-                if (cardsInDeck.Count > 0)
-                    cardsInDeck.RemoveAt(0);
-                HandAreaEvents.current.AddCardToHand(card);
+                initialDeal = true;
+                var playerDeck = GetDeckById(1);
+                if (playerDeck != null)
+                {
+                    foreach (Card crd in playerDeck.DeckList)
+                    {
+                        crd.IsFaceDown = true;
+                        cardsInDeck.Add(crd);
+                    }
+                    StartCoroutine(DealInitialCards());
+                }
             }
         }
     }
@@ -40,22 +52,47 @@ public class DeckManager : MonoBehaviour, IPointerDownHandler
     {
         if (cardsInDeck.Count > 0)
         {
-            GameObject card = cardManager.GetCard(cardsInDeck[0]);
-            if (cardsInDeck.Count > 0)
-                cardsInDeck.RemoveAt(0);
-            if (cardsInDeck.Count == 0)
-                this.gameObject.SetActive(false);
-            card.transform.parent = this.transform.parent;
-            card.transform.position = this.transform.position;
-            Sequence dealCardSequence = DOTween.Sequence();
-            dealCardSequence.Append(card.transform.DOLocalMove(new Vector3(-734, 139, card.transform.position.z), 0.5f).SetEase(Ease.OutQuint));
-            dealCardSequence.Append(card.transform.DOLocalMove(new Vector3(0, -166, card.transform.position.z), 0.5f).SetEase(Ease.OutQuint));
-            dealCardSequence.OnComplete(() =>
-            {
-                HandAreaEvents.current.AddCardToHand(card);
-            });
-        }        
+            DealCard();
+        }
 
+    }
+
+    private void DealCard()
+    {
+        GameObject card = cardManager.GetCard(cardsInDeck[0]);
+        if (cardsInDeck.Count > 0)
+            cardsInDeck.RemoveAt(0);
+        if (cardsInDeck.Count == 0)
+            this.gameObject.SetActive(false);
+        card.transform.parent = this.transform.parent;
+        card.transform.position = this.transform.position;
+        Sequence dealCardSequence = DOTween.Sequence();
+
+        dealCardSequence.Append(card.transform.DOLocalMove(new Vector3(-734, 139, card.transform.position.z), 0.5f).SetEase(Ease.OutQuint).OnComplete(() =>
+        {
+            CardRotation cardRotation = card.transform.GetComponent<CardRotation>();
+            if (cardRotation.cardState == Enums.CardState.FaceDown)
+            {
+                cardRotation.cardState = Enums.CardState.FaceUp;
+                cardRotation.FromDeckStartFaceUp();
+            }
+        }));
+
+        dealCardSequence.Append(card.transform.DOLocalMove(new Vector3(0, -166, card.transform.position.z), 0.5f).SetDelay(0.5f).SetEase(Ease.OutQuint));
+        dealCardSequence.OnComplete(() =>
+        {
+            HandAreaEvents.current.AddCardToHand(card);
+        });
+    }
+
+    IEnumerator DealInitialCards()
+    {
+        for (int i = 0; i < initialDealOfCards; i++)
+        {
+            DealCard();
+            yield return new WaitForSeconds(1f);
+        }
+            
     }
 
     public List<GameObject> GetAllDecks()
