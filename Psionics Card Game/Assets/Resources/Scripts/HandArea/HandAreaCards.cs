@@ -135,7 +135,7 @@ public class HandAreaCards : MonoBehaviour
 
             //card.transform.position = position;
             card.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
-            card.transform.DOMove(position, 1f).SetEase(Ease.OutQuint);
+            
             GameObject cardFront = cardRotation.cardFront;
             if (cardFront.transform.rotation.eulerAngles.y == 180)
             {
@@ -145,8 +145,10 @@ public class HandAreaCards : MonoBehaviour
                         rotation.z
                     );
             }
+            card.transform.DOMove(position, 0.5f).SetEase(Ease.OutQuint).OnComplete(() => {
+                VisualsEvents.current.UpdateDraggableOriginalPosition(card, -1f, -1f);
+            });
             card.transform.parent = pivot.transform;
-            VisualsEvents.current.UpdateDraggableOriginalPosition(card, -1f, -1f);
             offsetX += cardWidth + spacing;
 
         }
