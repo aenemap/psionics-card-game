@@ -38,10 +38,12 @@ public class ArtCardPreview : MonoBehaviour
 
             if (cardDisplay.card.IsFaceDown)
             {
+                artCardFront.SetActive(false);
                 artCardBack.SetActive(true);
             }
             else
             {
+                artCardFront.SetActive(true);
                 artCardBack.SetActive(false);
             }
         }

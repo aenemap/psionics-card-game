@@ -9,6 +9,8 @@ public class CardRotation : MonoBehaviour
 {
     public GameObject cardBack;
     public GameObject cardFront;
+    public GameObject artCardBack;
+    public GameObject artCardFront;
     public CardState cardState = CardState.FaceUp;
     public float time = 0.1f;
 
@@ -35,17 +37,44 @@ public class CardRotation : MonoBehaviour
         CardStateChangeDone = false;
     }
 
+    //private void OnMouseDown()
+    //{
+    //    if (cardState == CardState.FaceDown)
+    //        StartFaceUp();
+    //    else
+    //        StartFaceDown();
+    //}
+
     public void Flip()
     {
         if (!CardStateChangeDone)
         {
             if (cardState == CardState.FaceUp)
-            {                
+            {
                 cardBack.SetActive(false);
+                artCardBack.SetActive(false);
+                cardFront.SetActive(true);
             }
             else
             {
-                cardBack.SetActive(true);
+                if (this.gameObject.GetCardAsset().LocationOfCard == CardLocation.ShieldsArea || this.gameObject.GetCardAsset().LocationOfCard == CardLocation.TalentArea)
+                {
+                    cardBack.SetActive(false);
+                    artCardBack.SetActive(true);
+                    artCardFront.SetActive(false);
+                }
+                else if (this.gameObject.GetCardAsset().LocationOfCard == CardLocation.Deck)
+                {
+                    cardBack.SetActive(true);
+                    artCardFront.SetActive(false);
+                    artCardBack.SetActive(false);
+                }
+                else
+                {
+                    cardBack.SetActive(false);
+                    artCardFront.SetActive(false);
+                    artCardBack.SetActive(false);
+                }
 
             }
             CardStateChangeDone = true;

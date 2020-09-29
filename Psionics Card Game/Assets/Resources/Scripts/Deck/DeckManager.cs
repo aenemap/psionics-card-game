@@ -39,6 +39,7 @@ public class DeckManager : MonoBehaviour, IPointerDownHandler
                 {
                     foreach (Card crd in playerDeck.DeckList)
                     {
+                        crd.LocationOfCard = Enums.CardLocation.Deck;
                         cardsInDeck.Add(crd);
                     }
                     StartCoroutine(DealInitialCards());
@@ -59,7 +60,7 @@ public class DeckManager : MonoBehaviour, IPointerDownHandler
 
     private void DealCard()
     {
-        GameObject card = cardManager.GetCard(cardsInDeck[0], Enums.CardLocation.Deck);
+        GameObject card = cardManager.GetCard(cardsInDeck[0]);
         if (cardsInDeck.Count > 0)
             cardsInDeck.RemoveAt(0);
         if (cardsInDeck.Count == 0)
@@ -73,12 +74,13 @@ public class DeckManager : MonoBehaviour, IPointerDownHandler
 
         dealCardSequence.Append(card.transform.DOLocalMove(new Vector3(-734, 139, card.transform.position.z), time).SetEase(Ease.OutQuint).OnComplete(() =>
         {
-            CardRotation cardRotation = card.transform.GetComponent<CardRotation>();
-            if (cardRotation.cardState == Enums.CardState.FaceDown)
-            {
-                cardRotation.cardState = Enums.CardState.FaceUp;
-                cardRotation.FromDeckStartFaceUp();
-            }
+            card.StartRotation(Enums.CardState.FaceUp);
+            //CardRotation cardRotation = card.transform.GetComponent<CardRotation>();
+            //if (cardRotation.cardState == Enums.CardState.FaceDown)
+            //{
+            //    cardRotation.cardState = Enums.CardState.FaceUp;
+            //    cardRotation.FromDeckStartFaceUp();
+            //}
         }));
 
         dealCardSequence.Append(card.transform.DOLocalMove(new Vector3(0, -166, card.transform.position.z), time).SetDelay(0.5f).SetEase(Ease.OutQuint));

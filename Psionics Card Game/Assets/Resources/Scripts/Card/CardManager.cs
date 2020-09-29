@@ -31,12 +31,11 @@ public class CardManager : MonoBehaviour
         return allCards;
     }
 
-    public GameObject GetCard (Card crd, Enums.CardLocation cardLocation)
+    public GameObject GetCard (Card crd)
     {
         Card findCard = GetCardsFromResource().Where(w => w.CardId == crd.CardId).FirstOrDefault();
         card = GetTypeOfCard(findCard);
         var cardDisplay = card.GetComponent<CardDisplay>();
-        cardDisplay.card.LocationOfCard = cardLocation;
         var cardPreview = card.transform.Find("CardPreview");
         var cardPreviewDisplay = cardPreview.GetComponent<CardPreviewDisplay>();
         var canvas = card.transform.Find("Canvas");

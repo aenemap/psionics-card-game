@@ -50,8 +50,7 @@ public class HandAreaCards : MonoBehaviour
     {
         cardsInHand = cardsInHand.Where(w =>
         {
-            CardDisplay cardDisplay = w.transform.GetComponent<CardDisplay>();
-            return cardDisplay.CardId.text != cardId.ToString();
+            return w.GetCardAsset().CardId != cardId;
         }).ToList();
 
         if (bent)
@@ -80,14 +79,7 @@ public class HandAreaCards : MonoBehaviour
         {
             var card = cards[i];
 
-            CardRotation cardRotation = card.transform.GetComponent<CardRotation>();
-            if (cardRotation.cardState == Enums.CardState.FaceDown)
-            {
-                cardRotation.cardState = Enums.CardState.FaceUp;
-                if (cardRotation.CardStateChangeDone)
-                    cardRotation.CardStateChangeDone = false;
-                cardRotation.Flip();
-            }
+           
 
             var angleTwist = firstAngle + i * anglePerCard;
             var xPos = offsetX + cardWidth / 2;
@@ -97,21 +89,34 @@ public class HandAreaCards : MonoBehaviour
             var position = new Vector3(xPos, yPos, card.transform.position.z);
             //card.transform.position = position;
             card.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
-            GameObject cardFront = cardRotation.cardFront;
-            if (cardFront.transform.rotation.eulerAngles.y == 180)
+            CardRotation cardRotation = card.transform.GetComponent<CardRotation>();
+            if (cardRotation.cardState == Enums.CardState.FaceDown)
             {
-                cardFront.transform.rotation = Quaternion.Euler(
-                        rotation.x,
-                        0,
-                        rotation.z
-                    );
+                cardRotation.cardState = Enums.CardState.FaceUp;
+                if (cardRotation.CardStateChangeDone)
+                    cardRotation.CardStateChangeDone = false;
+                cardRotation.Flip();
             }
+            cardRotation.cardFront.transform.rotation = Quaternion.Euler(
+                       rotation.x,
+                       0,
+                       rotation.z
+                   );
+
+            //if (cardRotation.cardFront.transform.rotation.eulerAngles.y == 180 || card.transform.rotation.eulerAngles.y == -180)
+            //{
+            //    cardRotation.cardFront.transform.rotation = Quaternion.Euler(
+            //            rotation.x,
+            //            0,
+            //            rotation.z
+            //        );
+            //}
+
             card.transform.DOMove(position, 0.5f).SetEase(Ease.OutQuint).OnComplete(() => {
                 VisualsEvents.current.UpdateDraggableOriginalPosition(card, -1f, -1f);
             });
             card.transform.parent = pivot.transform;
-            CardDisplay cardDisplay = card.transform.GetComponent<CardDisplay>();
-            cardDisplay.card.LocationOfCard = Enums.CardLocation.HandArea;
+            card.SetCardLocation(Enums.CardLocation.HandArea);
             offsetX += cardWidth + spacing;
 
         }

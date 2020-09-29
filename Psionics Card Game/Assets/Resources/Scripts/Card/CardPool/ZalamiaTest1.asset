@@ -17,7 +17,7 @@ MonoBehaviour:
   CardType: 3
   CardSubType: 0
   EnergyCost: 1
-  IsFaceDown: 0
+  IsFaceDown: 1
   ConcistencyValue: 1
   DefenceValue: 1
   AbsorbingValue: 0

@@ -20,6 +20,8 @@ public class DropzoneShields : MonoBehaviour, IDropHandler
             VisualsEvents.current.CardToSmallPreview(eventData.pointerDrag);
             HandAreaEvents.current.RemoveCardFromHand(cardDisplay.card.CardId, false);
             HandAreaEvents.current.BendHand();
+            CardRotation cardROtation = eventData.pointerDrag.transform.GetComponent<CardRotation>();
+            cardROtation.StartFaceUp();
         }
     }
 }

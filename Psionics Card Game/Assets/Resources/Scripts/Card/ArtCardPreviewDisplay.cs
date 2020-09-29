@@ -21,7 +21,7 @@ public class ArtCardPreviewDisplay : MonoBehaviour
             EnergyCost.text = card.EnergyCost.ToString();
 
 
-            if (card.CardType == Enums.CardType.Shield)
+            if (card.CardType == Enums.CardType.Shield || card.CardType == Enums.CardType.Test)
             {
                 if (ConsistencyValue != null)
                     ConsistencyValue.text = card.ConcistencyValue.ToString();

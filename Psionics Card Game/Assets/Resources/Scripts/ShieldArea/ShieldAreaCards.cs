@@ -29,11 +29,9 @@ public class ShieldAreaCards : MonoBehaviour
 
     private void OnRemoveCardFromShields(int cardId)
     {
-        //TODO: Check if the card needs to be destroyed.
         shieldCards = shieldCards.Where(w =>
         {
-            CardDisplay cardDisplay = w.transform.GetComponent<CardDisplay>();
-            return cardDisplay.card.CardId != cardId;
+            return w.GetCardAsset().CardId != cardId;
         }).ToList();
     }
 
@@ -42,20 +40,17 @@ public class ShieldAreaCards : MonoBehaviour
 
         //shieldCards.Insert(0, shieldCard);
         shieldCards.Add(shieldCard);
-
         var shieldsWidth = Utilities.CalcAreaWidth(shieldCards.Count, cardWidth, spacing);
         var offSetX = pivot.position.x - shieldsWidth / 2;
 
         for (int i = 0; i < shieldCards.Count; i++)
         {
             var card = shieldCards[i];
-
-            //CardDisplay cardDisplay = card.transform.GetComponent<CardDisplay>();
-            //CardRotation cardRotation = card.transform.GetComponent<CardRotation>();
-            //if (cardRotation.cardState == Enums.CardState.FaceUp)
-            //{
-            //    cardRotation.StartFaceDown();
-            //}
+            card.SetCardLocation(Enums.CardLocation.ShieldsArea);
+            if (card.GetCardAsset().IsFaceDown)
+            {
+                card.StartRotation(Enums.CardState.FaceDown);
+            }
             var xPos = offSetX + cardWidth / 2;
             var yPos = pivot.position.y;
             //var rotation = card.transform.rotation;
@@ -63,8 +58,6 @@ public class ShieldAreaCards : MonoBehaviour
             card.transform.position = position;
             card.transform.parent = this.pivot.transform;
             VisualsEvents.current.UpdateDraggableOriginalPosition(card, xPos, yPos);
-            CardDisplay cardDisplay = card.transform.GetComponent<CardDisplay>();
-            cardDisplay.card.LocationOfCard = Enums.CardLocation.ShieldsArea;
             offSetX += cardWidth + spacing;
 
         }
