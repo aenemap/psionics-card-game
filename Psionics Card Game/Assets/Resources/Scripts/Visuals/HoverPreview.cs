@@ -98,9 +98,12 @@ public class HoverPreview: MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
         // 3) enable Preview game object
         previewGameObject.SetActive(true);
         // 4) disable if we have what to disable
-        if (TurnThisOffWhenPreviewing != null && TurnArtPreviewOffWhenPreviewing != null)
+        if (TurnThisOffWhenPreviewing != null)
         {
             TurnThisOffWhenPreviewing.SetActive(false);
+        }
+        if (TurnArtPreviewOffWhenPreviewing != null)
+        {
             TurnArtPreviewOffWhenPreviewing.SetActive(false);
         }
         // 5) tween to target position
@@ -122,7 +125,7 @@ public class HoverPreview: MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
         GameObject parent = previewGameObject.transform.parent.gameObject;
         parent.transform.SetSiblingIndex(objIndex);
 
-        if (TurnThisOffWhenPreviewing != null && TurnArtPreviewOffWhenPreviewing != null)
+        if (TurnThisOffWhenPreviewing != null)
         {
             CardDisplay cardDisplay = this.transform.GetComponent<CardDisplay>();
             if (cardDisplay != null)
@@ -130,12 +133,14 @@ public class HoverPreview: MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
                 if (cardDisplay.card.LocationOfCard == Enums.CardLocation.ShieldsArea || cardDisplay.card.LocationOfCard == Enums.CardLocation.TalentArea)
                 {
                     TurnThisOffWhenPreviewing.SetActive(false);
-                    TurnArtPreviewOffWhenPreviewing.SetActive(true);
+                    if (TurnArtPreviewOffWhenPreviewing != null)
+                        TurnArtPreviewOffWhenPreviewing.SetActive(true);
                 }
                 else
                 {
                     TurnThisOffWhenPreviewing.SetActive(true);
-                    TurnArtPreviewOffWhenPreviewing.SetActive(false);
+                    if (TurnArtPreviewOffWhenPreviewing != null)
+                        TurnArtPreviewOffWhenPreviewing.SetActive(false);
                 }
             }
         }
@@ -151,7 +156,7 @@ public class HoverPreview: MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
             currentlyViewing.previewGameObject.transform.localPosition = Vector3.zero;
             GameObject parent = currentlyViewing.previewGameObject.transform.parent.gameObject;
             parent.transform.SetSiblingIndex(objIndex);
-            if (currentlyViewing.TurnThisOffWhenPreviewing != null && currentlyViewing.TurnArtPreviewOffWhenPreviewing != null)
+            if (currentlyViewing.TurnThisOffWhenPreviewing != null)
             {
                 CardDisplay cardDisplay = currentlyViewing.transform.GetComponent<CardDisplay>();
                 if (cardDisplay != null)
@@ -159,12 +164,14 @@ public class HoverPreview: MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
                     if (cardDisplay.card.LocationOfCard == Enums.CardLocation.ShieldsArea || cardDisplay.card.LocationOfCard == Enums.CardLocation.TalentArea)
                     {
                         currentlyViewing.TurnThisOffWhenPreviewing.SetActive(false);
-                        currentlyViewing.TurnArtPreviewOffWhenPreviewing.SetActive(true);
+                        if (currentlyViewing.TurnArtPreviewOffWhenPreviewing != null)
+                            currentlyViewing.TurnArtPreviewOffWhenPreviewing.SetActive(true);
                     }
                     else
                     {
                         currentlyViewing.TurnThisOffWhenPreviewing.SetActive(true);
-                        currentlyViewing.TurnArtPreviewOffWhenPreviewing.SetActive(false);
+                        if (currentlyViewing.TurnArtPreviewOffWhenPreviewing != null)
+                            currentlyViewing.TurnArtPreviewOffWhenPreviewing.SetActive(false);
                     }
                 }
             }

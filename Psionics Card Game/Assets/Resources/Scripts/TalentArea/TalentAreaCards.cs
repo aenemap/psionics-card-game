@@ -26,11 +26,9 @@ public class TalentAreaCards : MonoBehaviour
 
     private void OnRemoveCardFromTalents(int cardId)
     {
-        //TODO: Check if the card needs to be destroyed.
         talentCards = talentCards.Where(w =>
         {
-            CardDisplay cardDisplay = w.transform.GetComponent<CardDisplay>();
-            return cardDisplay.CardId.text != cardId.ToString();
+            return w.GetCardAsset().CardId != cardId;
         }).ToList();
     }
 
@@ -45,12 +43,10 @@ public class TalentAreaCards : MonoBehaviour
         for (int i = 0; i < talentCards.Count; i++)
         {
             var card = talentCards[i];
-
-            CardDisplay cardDisplay = card.transform.GetComponent<CardDisplay>();
-            CardRotation cardRotation = card.transform.GetComponent<CardRotation>();
-            if (cardRotation.cardState == Enums.CardState.FaceUp)
+            card.SetCardLocation(Enums.CardLocation.TalentArea);
+            if (card.GetCardAsset().IsFaceDown)
             {
-                cardRotation.StartFaceDown();
+                card.StartRotation(Enums.CardState.FaceDown);
             }
             var xPos = offSetX + cardWidth / 2;
             var yPos = pivot.position.y;

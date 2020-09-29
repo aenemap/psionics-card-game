@@ -52,28 +52,38 @@ public class CardRotation : MonoBehaviour
             if (cardState == CardState.FaceUp)
             {
                 cardBack.SetActive(false);
-                artCardBack.SetActive(false);
                 cardFront.SetActive(true);
+                if (artCardBack != null)
+                    artCardBack.SetActive(false);
             }
             else
             {
                 if (this.gameObject.GetCardAsset().LocationOfCard == CardLocation.ShieldsArea || this.gameObject.GetCardAsset().LocationOfCard == CardLocation.TalentArea)
                 {
                     cardBack.SetActive(false);
-                    artCardBack.SetActive(true);
-                    artCardFront.SetActive(false);
+                    if (artCardBack != null && artCardFront != null)
+                    {
+                        artCardBack.SetActive(true);
+                        artCardFront.SetActive(false);
+                    }
                 }
                 else if (this.gameObject.GetCardAsset().LocationOfCard == CardLocation.Deck)
                 {
                     cardBack.SetActive(true);
-                    artCardFront.SetActive(false);
-                    artCardBack.SetActive(false);
+                    if (artCardBack != null && artCardFront != null)
+                    {
+                        artCardFront.SetActive(false);
+                        artCardBack.SetActive(false);
+                    }
                 }
                 else
                 {
                     cardBack.SetActive(false);
-                    artCardFront.SetActive(false);
-                    artCardBack.SetActive(false);
+                    if (artCardBack != null && artCardFront != null)
+                    {
+                        artCardFront.SetActive(false);
+                        artCardBack.SetActive(false);
+                    }
                 }
 
             }

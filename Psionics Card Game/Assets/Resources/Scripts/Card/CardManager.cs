@@ -40,14 +40,17 @@ public class CardManager : MonoBehaviour
         var cardPreviewDisplay = cardPreview.GetComponent<CardPreviewDisplay>();
         var canvas = card.transform.Find("Canvas");
         var cardArt = canvas.transform.Find("ArtCard");
-        var cardArtPreviewDisplay = cardArt.GetComponent<ArtCardPreviewDisplay>();
+        ArtCardPreviewDisplay cardArtPreviewDisplay = null;
+        if (cardArt != null)
+            cardArtPreviewDisplay = cardArt.GetComponent<ArtCardPreviewDisplay>();
 
 
         if (findCard != null)
         {
             cardDisplay.card = findCard;
             cardPreviewDisplay.card = findCard;
-            cardArtPreviewDisplay.card = findCard;
+            if (cardArtPreviewDisplay != null)
+                cardArtPreviewDisplay.card = findCard;
             GameObject singleCard = Instantiate(card, new Vector3(0, 0, -0.01f), Quaternion.identity);
             
             CardRotation cardRotation = singleCard.transform.GetComponent<CardRotation>();

@@ -34,7 +34,7 @@ public class DeckManager : MonoBehaviour, IPointerDownHandler
             if (timeElapsed > delayBeforeDealCards && !initialDeal)
             {
                 initialDeal = true;
-                var playerDeck = GetDeckById(5);
+                var playerDeck = GetDeckById(1);
                 if (playerDeck != null)
                 {
                     foreach (Card crd in playerDeck.DeckList)

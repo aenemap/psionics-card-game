@@ -13,15 +13,13 @@ public class DropzoneShields : MonoBehaviour, IDropHandler
     }
     public void OnDrop(PointerEventData eventData)
     {
-        CardDisplay cardDisplay = eventData.pointerDrag.GetComponent<CardDisplay>();
-        if (cardDisplay.card.CardType == Enums.CardType.Shield || cardDisplay.card.CardType == Enums.CardType.Test)
+        Card cardAsset = eventData.pointerDrag.GetCardAsset();
+        if (cardAsset.CardType == Enums.CardType.Shield || cardAsset.CardType == Enums.CardType.Test)
         {
             ShieldAreaEvents.current.AddCardToShields(eventData.pointerDrag);
             VisualsEvents.current.CardToSmallPreview(eventData.pointerDrag);
-            HandAreaEvents.current.RemoveCardFromHand(cardDisplay.card.CardId, false);
+            HandAreaEvents.current.RemoveCardFromHand(cardAsset.CardId, false);
             HandAreaEvents.current.BendHand();
-            CardRotation cardROtation = eventData.pointerDrag.transform.GetComponent<CardRotation>();
-            cardROtation.StartFaceUp();
         }
     }
 }
