@@ -21,5 +21,6 @@ MonoBehaviour:
   ConcistencyValue: 2
   DefenceValue: 0
   AbsorbingValue: 5
-  IsLoadedWithEnergy: 1
+  IsLoadedWithEnergy: 0
   TrashCost: 0
+  LocationOfCard: 0

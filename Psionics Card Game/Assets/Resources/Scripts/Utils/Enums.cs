@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 public static class Enums 
@@ -29,6 +30,15 @@ public static class Enums
     {
         FaceUp,
         FaceDown
+    }
+
+    public enum CardLocation
+    {
+        Deck,
+        ShieldsArea,
+        TalentArea,
+        HandArea,
+        Discards
     }
 
 }

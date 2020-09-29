@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardId: 9
   CardName: Natamena
-  CardType: 2
+  CardType: 0
   CardSubType: 0
   EnergyCost: 5
   IsFaceDown: 0
-  ConcistencyValue: 0
-  DefenceValue: 0
+  ConcistencyValue: 3
+  DefenceValue: 2
   AbsorbingValue: 0
   IsLoadedWithEnergy: 0
   TrashCost: 3
+  LocationOfCard: 0

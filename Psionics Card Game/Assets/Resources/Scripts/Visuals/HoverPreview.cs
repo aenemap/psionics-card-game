@@ -7,11 +7,15 @@ public class HoverPreview: MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
 {
     // PUBLIC FIELDS
     public GameObject TurnThisOffWhenPreviewing;  // if this is null, will not turn off anything 
+    public GameObject TurnArtPreviewOffWhenPreviewing;
     public Vector3 TargetPosition;
     public float TargetScale;
     public GameObject previewGameObject;
     public bool ActivateInAwake = false;
-    private static int objIndex;
+    private static int objIndex;    
+
+    Ray ray;
+    RaycastHit hit;
 
     // PRIVATE FIELDS
     private static HoverPreview currentlyViewing = null;
@@ -61,6 +65,15 @@ public class HoverPreview: MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
 
     void OnMouseEnter()
     {
+        //foundObject = false;
+        //ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //if (Physics.Raycast(ray, out hit))
+        //{
+        //    if (hit.collider != null)
+        //    {
+        //        card = hit.collider.gameObject;
+        //    }
+        //}
         OverCollider = true;
         if (PreviewsAllowed && ThisPreviewEnabled)
             PreviewThisObject();
@@ -85,8 +98,11 @@ public class HoverPreview: MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
         // 3) enable Preview game object
         previewGameObject.SetActive(true);
         // 4) disable if we have what to disable
-        if (TurnThisOffWhenPreviewing != null)
+        if (TurnThisOffWhenPreviewing != null && TurnArtPreviewOffWhenPreviewing != null)
+        {
             TurnThisOffWhenPreviewing.SetActive(false);
+            TurnArtPreviewOffWhenPreviewing.SetActive(false);
+        }
         // 5) tween to target position
         previewGameObject.transform.localPosition = Vector3.zero;
         previewGameObject.transform.localScale = Vector3.one;
@@ -105,8 +121,24 @@ public class HoverPreview: MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
         previewGameObject.transform.localPosition = Vector3.zero;
         GameObject parent = previewGameObject.transform.parent.gameObject;
         parent.transform.SetSiblingIndex(objIndex);
-        if (TurnThisOffWhenPreviewing!=null)
-            TurnThisOffWhenPreviewing.SetActive(true); 
+
+        if (TurnThisOffWhenPreviewing != null && TurnArtPreviewOffWhenPreviewing != null)
+        {
+            CardDisplay cardDisplay = this.transform.GetComponent<CardDisplay>();
+            if (cardDisplay != null)
+            {
+                if (cardDisplay.card.LocationOfCard == Enums.CardLocation.ShieldsArea || cardDisplay.card.LocationOfCard == Enums.CardLocation.TalentArea)
+                {
+                    TurnThisOffWhenPreviewing.SetActive(false);
+                    TurnArtPreviewOffWhenPreviewing.SetActive(true);
+                }
+                else
+                {
+                    TurnThisOffWhenPreviewing.SetActive(true);
+                    TurnArtPreviewOffWhenPreviewing.SetActive(false);
+                }
+            }
+        }
     }
 
     // STATIC METHODS
@@ -119,8 +151,23 @@ public class HoverPreview: MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
             currentlyViewing.previewGameObject.transform.localPosition = Vector3.zero;
             GameObject parent = currentlyViewing.previewGameObject.transform.parent.gameObject;
             parent.transform.SetSiblingIndex(objIndex);
-            if (currentlyViewing.TurnThisOffWhenPreviewing!=null)
-                currentlyViewing.TurnThisOffWhenPreviewing.SetActive(true); 
+            if (currentlyViewing.TurnThisOffWhenPreviewing != null && currentlyViewing.TurnArtPreviewOffWhenPreviewing != null)
+            {
+                CardDisplay cardDisplay = currentlyViewing.transform.GetComponent<CardDisplay>();
+                if (cardDisplay != null)
+                {
+                    if (cardDisplay.card.LocationOfCard == Enums.CardLocation.ShieldsArea || cardDisplay.card.LocationOfCard == Enums.CardLocation.TalentArea)
+                    {
+                        currentlyViewing.TurnThisOffWhenPreviewing.SetActive(false);
+                        currentlyViewing.TurnArtPreviewOffWhenPreviewing.SetActive(true);
+                    }
+                    else
+                    {
+                        currentlyViewing.TurnThisOffWhenPreviewing.SetActive(true);
+                        currentlyViewing.TurnArtPreviewOffWhenPreviewing.SetActive(false);
+                    }
+                }
+            }
         }
          
     }

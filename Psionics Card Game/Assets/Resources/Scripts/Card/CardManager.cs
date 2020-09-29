@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices.ComTypes;
 using TMPro;
 using UnityEngine;
 
@@ -30,26 +31,30 @@ public class CardManager : MonoBehaviour
         return allCards;
     }
 
-    public GameObject GetCard (Card crd)
+    public GameObject GetCard (Card crd, Enums.CardLocation cardLocation)
     {
         Card findCard = GetCardsFromResource().Where(w => w.CardId == crd.CardId).FirstOrDefault();
         card = GetTypeOfCard(findCard);
         var cardDisplay = card.GetComponent<CardDisplay>();
+        cardDisplay.card.LocationOfCard = cardLocation;
         var cardPreview = card.transform.Find("CardPreview");
         var cardPreviewDisplay = cardPreview.GetComponent<CardPreviewDisplay>();
+        var canvas = card.transform.Find("Canvas");
+        var cardArt = canvas.transform.Find("ArtCard");
+        var cardArtPreviewDisplay = cardArt.GetComponent<ArtCardPreviewDisplay>();
 
 
         if (findCard != null)
         {
             cardDisplay.card = findCard;
             cardPreviewDisplay.card = findCard;
-            GameObject singleCard = Instantiate(card, new Vector2(0, 0), Quaternion.identity);
-            if (crd.IsFaceDown)
-            {
-                CardRotation cardRotation = singleCard.transform.GetComponent<CardRotation>();
-                cardRotation.cardState = Enums.CardState.FaceDown;
-                cardRotation.Flip();
-            }
+            cardArtPreviewDisplay.card = findCard;
+            GameObject singleCard = Instantiate(card, new Vector3(0, 0, -0.01f), Quaternion.identity);
+            
+            CardRotation cardRotation = singleCard.transform.GetComponent<CardRotation>();
+            cardRotation.cardState = Enums.CardState.FaceDown;
+            cardRotation.Flip();
+            
 
             return singleCard;
         }

@@ -15,11 +15,12 @@ MonoBehaviour:
   CardId: 18
   CardName: ZalamiaTest5
   CardType: 3
-  CardSubType: 2
+  CardSubType: 0
   EnergyCost: 5
-  IsFaceDown: 1
-  ConcistencyValue: 0
-  DefenceValue: 0
+  IsFaceDown: 0
+  ConcistencyValue: 5
+  DefenceValue: 5
   AbsorbingValue: 0
   IsLoadedWithEnergy: 0
   TrashCost: 0
+  LocationOfCard: 1

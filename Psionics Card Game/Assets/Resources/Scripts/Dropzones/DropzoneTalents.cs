@@ -11,10 +11,11 @@ public class DropzoneTalents : MonoBehaviour, IDropHandler
     public void OnDrop(PointerEventData eventData)
     {
         CardDisplay cardDisplay = eventData.pointerDrag.GetComponent<CardDisplay>();
+        cardDisplay.card.LocationOfCard = Enums.CardLocation.TalentArea;
         if (cardDisplay.card.CardType == Enums.CardType.Talent)
         {
             TalentAreaEvents.current.AddCardToTalents(eventData.pointerDrag);
-            HandAreaEvents.current.RemoveCardFromHand(cardDisplay.card.CardId);
+            HandAreaEvents.current.RemoveCardFromHand(cardDisplay.card.CardId, false);
             HandAreaEvents.current.BendHand();
         }
 

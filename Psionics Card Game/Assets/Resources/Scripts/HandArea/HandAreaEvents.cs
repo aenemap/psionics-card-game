@@ -13,7 +13,7 @@ public class HandAreaEvents : MonoBehaviour
     }
 
     public event Action onBendHand;
-    public event Action<int> onRemoveCardFromHand;
+    public event Action<int, bool> onRemoveCardFromHand;
     public event Action<GameObject> onAddCardToHand;
 
     public void BendHand()
@@ -24,9 +24,9 @@ public class HandAreaEvents : MonoBehaviour
         }
     }
 
-    public void RemoveCardFromHand(int cardId)
+    public void RemoveCardFromHand(int cardId, bool bent)
     {
-        onRemoveCardFromHand?.Invoke(cardId);
+        onRemoveCardFromHand?.Invoke(cardId, bent);
     }
 
     public void AddCardToHand(GameObject card)

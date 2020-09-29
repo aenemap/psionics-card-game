@@ -14,12 +14,12 @@ public class DropzoneShields : MonoBehaviour, IDropHandler
     public void OnDrop(PointerEventData eventData)
     {
         CardDisplay cardDisplay = eventData.pointerDrag.GetComponent<CardDisplay>();
-        if (cardDisplay.card.CardType == Enums.CardType.Shield)
+        if (cardDisplay.card.CardType == Enums.CardType.Shield || cardDisplay.card.CardType == Enums.CardType.Test)
         {
             ShieldAreaEvents.current.AddCardToShields(eventData.pointerDrag);
-            HandAreaEvents.current.RemoveCardFromHand(cardDisplay.card.CardId);
+            VisualsEvents.current.CardToSmallPreview(eventData.pointerDrag);
+            HandAreaEvents.current.RemoveCardFromHand(cardDisplay.card.CardId, false);
             HandAreaEvents.current.BendHand();
         }
-
     }
 }

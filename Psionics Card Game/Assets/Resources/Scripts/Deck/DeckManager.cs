@@ -15,9 +15,9 @@ public class DeckManager : MonoBehaviour, IPointerDownHandler
 
     private List<Card> cardsInDeck = new List<Card>();
 
-    public float time = 0.1f;
+    public float time = 0.3f;
     private int initialDealOfCards = 5;
-    private float delayBeforeDealCards = 2f;
+    private float delayBeforeDealCards = 1f;
     private float timeElapsed;
     private bool initialDeal = false;
 
@@ -34,16 +34,16 @@ public class DeckManager : MonoBehaviour, IPointerDownHandler
             if (timeElapsed > delayBeforeDealCards && !initialDeal)
             {
                 initialDeal = true;
-                var playerDeck = GetDeckById(1);
+                var playerDeck = GetDeckById(5);
                 if (playerDeck != null)
                 {
                     foreach (Card crd in playerDeck.DeckList)
                     {
-                        crd.IsFaceDown = true;
                         cardsInDeck.Add(crd);
                     }
                     StartCoroutine(DealInitialCards());
                 }
+                
             }
         }
     }
@@ -59,16 +59,19 @@ public class DeckManager : MonoBehaviour, IPointerDownHandler
 
     private void DealCard()
     {
-        GameObject card = cardManager.GetCard(cardsInDeck[0]);
+        GameObject card = cardManager.GetCard(cardsInDeck[0], Enums.CardLocation.Deck);
         if (cardsInDeck.Count > 0)
             cardsInDeck.RemoveAt(0);
         if (cardsInDeck.Count == 0)
+        {
             this.gameObject.SetActive(false);
+        }
         card.transform.parent = this.transform.parent;
         card.transform.position = this.transform.position;
+        HoverPreview.PreviewsAllowed = false;
         Sequence dealCardSequence = DOTween.Sequence();
 
-        dealCardSequence.Append(card.transform.DOLocalMove(new Vector3(-734, 139, card.transform.position.z), 0.5f).SetEase(Ease.OutQuint).OnComplete(() =>
+        dealCardSequence.Append(card.transform.DOLocalMove(new Vector3(-734, 139, card.transform.position.z), time).SetEase(Ease.OutQuint).OnComplete(() =>
         {
             CardRotation cardRotation = card.transform.GetComponent<CardRotation>();
             if (cardRotation.cardState == Enums.CardState.FaceDown)
@@ -78,10 +81,11 @@ public class DeckManager : MonoBehaviour, IPointerDownHandler
             }
         }));
 
-        dealCardSequence.Append(card.transform.DOLocalMove(new Vector3(0, -166, card.transform.position.z), 0.5f).SetDelay(0.5f).SetEase(Ease.OutQuint));
+        dealCardSequence.Append(card.transform.DOLocalMove(new Vector3(0, -166, card.transform.position.z), time).SetDelay(0.5f).SetEase(Ease.OutQuint));
         dealCardSequence.OnComplete(() =>
         {
             HandAreaEvents.current.AddCardToHand(card);
+            HoverPreview.PreviewsAllowed = true;
         });
     }
 

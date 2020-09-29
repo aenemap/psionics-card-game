@@ -44,8 +44,9 @@ public class CardRotation : MonoBehaviour
                 cardBack.SetActive(false);
             }
             else
-            {                
+            {
                 cardBack.SetActive(true);
+
             }
             CardStateChangeDone = true;
         }

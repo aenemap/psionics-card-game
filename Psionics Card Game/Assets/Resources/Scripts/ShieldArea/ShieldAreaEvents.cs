@@ -18,17 +18,11 @@ public class ShieldAreaEvents : MonoBehaviour
 
     public void AddCardToShields(GameObject shieldCard)
     {
-        if (onAddCardToShields != null)
-        {
-            onAddCardToShields(shieldCard);
-        }
+        onAddCardToShields?.Invoke(shieldCard);
     }
 
     public void RemoveCardFromShields(int cardId)
     {
-        if (onRemoveCardFromShields != null)
-        {
-            onRemoveCardFromShields(cardId);
-        }
+        onRemoveCardFromShields?.Invoke(cardId);
     }
 }

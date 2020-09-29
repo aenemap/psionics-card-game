@@ -36,38 +36,26 @@ public class HandAreaCards : MonoBehaviour
 
     void Start()
     {
-
-        //var deck = deckManager.GetDeckById(1);
-        //if (deck != null)
-        //{
-        //    foreach(Card card in deck.DeckList)
-        //    {
-        //        GameObject crd = cardManager.GetCard(card.CardId);
-        //        cardsInHand.Add(crd);
-        //        crd.transform.SetParent(pivot.transform, false);
-                
-        //    }
-            
-        //    Bent(cardsInHand);
-           
-        //}
-
     }
 
     private void OnAddCardToHand(GameObject card)
     {
-        
-        cardsInHand.Insert(0, card);
+
+        //cardsInHand.Insert(0, card);
+        cardsInHand.Add(card);
         Bent(cardsInHand);
     }
 
-    private void OnRemoveCardFromHand(int cardId)
+    private void OnRemoveCardFromHand(int cardId, bool bent)
     {
         cardsInHand = cardsInHand.Where(w =>
         {
             CardDisplay cardDisplay = w.transform.GetComponent<CardDisplay>();
             return cardDisplay.CardId.text != cardId.ToString();
         }).ToList();
+
+        if (bent)
+            Bent(cardsInHand);
     }
 
     private void OnBendHand()
@@ -102,19 +90,13 @@ public class HandAreaCards : MonoBehaviour
             }
 
             var angleTwist = firstAngle + i * anglePerCard;
-
             var xPos = offsetX + cardWidth / 2;
-
             var yDistance = Mathf.Abs(angleTwist) * height;
-
             var yPos = pivot.position.y - yDistance;
-
             var rotation = new Vector3(0, 0, angleTwist);
             var position = new Vector3(xPos, yPos, card.transform.position.z);
-
             //card.transform.position = position;
             card.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
-            
             GameObject cardFront = cardRotation.cardFront;
             if (cardFront.transform.rotation.eulerAngles.y == 180)
             {
@@ -128,11 +110,11 @@ public class HandAreaCards : MonoBehaviour
                 VisualsEvents.current.UpdateDraggableOriginalPosition(card, -1f, -1f);
             });
             card.transform.parent = pivot.transform;
+            CardDisplay cardDisplay = card.transform.GetComponent<CardDisplay>();
+            cardDisplay.card.LocationOfCard = Enums.CardLocation.HandArea;
             offsetX += cardWidth + spacing;
 
         }
-
-
     }
 
     private void OnDisable()

@@ -17,6 +17,7 @@ public class Card : ScriptableObject
     public int AbsorbingValue;
     public bool IsLoadedWithEnergy;
     public int TrashCost;
+    public CardLocation LocationOfCard;
 
     public void PrintCard()
     {

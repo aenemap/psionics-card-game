@@ -17,18 +17,12 @@ public class TalentAreaEvents : MonoBehaviour
 
     public void AddCardToTalents(GameObject talentCard)
     {
-        if (onAddCardToTalents != null)
-        {
-            onAddCardToTalents(talentCard);
-        }
+        onAddCardToTalents?.Invoke(talentCard);
     }
 
     public void RemoveCardFromTalents(int cardId)
     {
-        if (onRemoveCardFromTalents != null)
-        {
-            onRemoveCardFromTalents(cardId);
-        }
+        onRemoveCardFromTalents?.Invoke(cardId);
     }
 
 
