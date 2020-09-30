@@ -16,6 +16,7 @@ MonoBehaviour:
   CardName: Gerami
   CardType: 1
   CardSubType: 0
+  CardImage: {fileID: 21300000, guid: b06ebf3140c123a4aa2ca0ebf51f50c7, type: 3}
   EnergyCost: 2
   IsFaceDown: 0
   ConcistencyValue: 0
@@ -23,4 +24,4 @@ MonoBehaviour:
   AbsorbingValue: 0
   IsLoadedWithEnergy: 0
   TrashCost: 0
-  LocationOfCard: 0
+  LocationOfCard: 3

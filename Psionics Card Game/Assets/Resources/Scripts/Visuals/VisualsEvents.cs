@@ -7,7 +7,7 @@ public class VisualsEvents : MonoBehaviour
 {
     public static VisualsEvents current;
 
-    public void Awake()
+    public VisualsEvents()
     {
         current = this;
     }
@@ -15,6 +15,7 @@ public class VisualsEvents : MonoBehaviour
     public event Action<GameObject, float, float> onUpdateDraggableOriginalPosition;
     public event Action<GameObject> onCardToSmallPreview;
     public event Action<GameObject> onCardToNormalPreview;
+    public event Action<GameObject> onAddCardToDiscards;
 
     public void UpdateDraggableOriginalPosition(GameObject card, float xPos, float yPos)
     {
@@ -29,6 +30,11 @@ public class VisualsEvents : MonoBehaviour
     public void CardToNormalPreview(GameObject card)
     {
         onCardToNormalPreview?.Invoke(card);
+    }
+
+    public void AddCardToDiscards(GameObject card)
+    {
+        onAddCardToDiscards?.Invoke(card);
     }
 
 }

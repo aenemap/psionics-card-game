@@ -115,7 +115,7 @@ public class HandAreaCards : MonoBehaviour
             card.transform.DOMove(position, 0.5f).SetEase(Ease.OutQuint).OnComplete(() => {
                 VisualsEvents.current.UpdateDraggableOriginalPosition(card, -1f, -1f);
             });
-            card.transform.parent = pivot.transform;
+            card.transform.SetParent(pivot.transform);
             card.SetCardLocation(Enums.CardLocation.HandArea);
             offsetX += cardWidth + spacing;
 

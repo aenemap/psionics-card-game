@@ -16,6 +16,7 @@ MonoBehaviour:
   CardName: Emara
   CardType: 1
   CardSubType: 0
+  CardImage: {fileID: 21300000, guid: c0962d74f6a596c4ea2e85b54bfef654, type: 3}
   EnergyCost: 3
   IsFaceDown: 0
   ConcistencyValue: 0
@@ -23,4 +24,4 @@ MonoBehaviour:
   AbsorbingValue: 0
   IsLoadedWithEnergy: 0
   TrashCost: 0
-  LocationOfCard: 0
+  LocationOfCard: 3

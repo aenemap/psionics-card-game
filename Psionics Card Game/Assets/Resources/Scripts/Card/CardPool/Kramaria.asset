@@ -16,6 +16,7 @@ MonoBehaviour:
   CardName: Kramaria
   CardType: 0
   CardSubType: 1
+  CardImage: {fileID: 21300000, guid: b3a63ac4da54a1948b62d74603b9212c, type: 3}
   EnergyCost: 3
   IsFaceDown: 0
   ConcistencyValue: 2

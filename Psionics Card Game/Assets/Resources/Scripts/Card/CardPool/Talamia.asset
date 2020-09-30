@@ -16,6 +16,7 @@ MonoBehaviour:
   CardName: Talamia
   CardType: 1
   CardSubType: 0
+  CardImage: {fileID: 21300000, guid: c84e53ccf2dc4854aa3aafc75c242616, type: 3}
   EnergyCost: 4
   IsFaceDown: 0
   ConcistencyValue: 0

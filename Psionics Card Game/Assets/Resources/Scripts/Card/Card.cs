@@ -10,6 +10,7 @@ public class Card : ScriptableObject
     public string CardName;
     public CardType CardType;
     public CardSubType CardSubType;
+    public Sprite CardImage;
     public int EnergyCost;
     public bool IsFaceDown;
     public int ConcistencyValue;

@@ -65,17 +65,9 @@ public class HoverPreview: MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
 
     void OnMouseEnter()
     {
-        //foundObject = false;
-        //ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //if (Physics.Raycast(ray, out hit))
-        //{
-        //    if (hit.collider != null)
-        //    {
-        //        card = hit.collider.gameObject;
-        //    }
-        //}
         OverCollider = true;
-        if (PreviewsAllowed && ThisPreviewEnabled)
+
+        if (PreviewsAllowed && ThisPreviewEnabled && this.gameObject.GetCardAsset().LocationOfCard != Enums.CardLocation.Discards)
             PreviewThisObject();
     }
 

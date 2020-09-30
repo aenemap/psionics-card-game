@@ -16,6 +16,7 @@ MonoBehaviour:
   CardName: Denemia
   CardType: 0
   CardSubType: 0
+  CardImage: {fileID: 21300000, guid: f0566f23dbee5824083d23148403352a, type: 3}
   EnergyCost: 3
   IsFaceDown: 0
   ConcistencyValue: 2
@@ -23,4 +24,4 @@ MonoBehaviour:
   AbsorbingValue: 0
   IsLoadedWithEnergy: 0
   TrashCost: 0
-  LocationOfCard: 0
+  LocationOfCard: 1

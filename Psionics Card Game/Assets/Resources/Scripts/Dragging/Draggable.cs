@@ -73,12 +73,20 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        CardDisplay cardDisplay = eventData.pointerDrag.transform.GetComponent<CardDisplay>();
-        GetComponent<CanvasGroup>().blocksRaycasts = true;
-        eventData.pointerDrag.transform.rotation = originalRotation;
-        if (!DOTween.IsTweening(eventData.pointerDrag.transform))
-            eventData.pointerDrag.transform.DOMove(new Vector3(originalPosition.x, originalPosition.y, originalPosition.z), 0.5f).SetEase(Ease.OutQuint);
+        Card endOfDragCard = eventData.pointerDrag.GetCardAsset();
+        if (endOfDragCard.CardType == Enums.CardType.Event)
+        {
+            VisualsEvents.current.AddCardToDiscards(eventData.pointerDrag);            
+        }
+        else
+        {
+            GetComponent<CanvasGroup>().blocksRaycasts = true;
+            eventData.pointerDrag.transform.rotation = originalRotation;
+            if (!DOTween.IsTweening(eventData.pointerDrag.transform))
+                eventData.pointerDrag.transform.DOMove(new Vector3(originalPosition.x, originalPosition.y, originalPosition.z), 0.5f).SetEase(Ease.OutQuint);
+        }
         HoverPreview.PreviewsAllowed = true;
+
 
     }
 

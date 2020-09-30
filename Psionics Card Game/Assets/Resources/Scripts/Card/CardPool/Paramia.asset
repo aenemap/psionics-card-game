@@ -16,6 +16,7 @@ MonoBehaviour:
   CardName: Paramia
   CardType: 0
   CardSubType: 1
+  CardImage: {fileID: 21300000, guid: 281307083371df54faae0e7ec8a51cc6, type: 3}
   EnergyCost: 3
   IsFaceDown: 0
   ConcistencyValue: 2

@@ -16,6 +16,7 @@ MonoBehaviour:
   CardName: Prokoros
   CardType: 0
   CardSubType: 0
+  CardImage: {fileID: 21300000, guid: 8384abebc98ad514a94575971cb1a647, type: 3}
   EnergyCost: 3
   IsFaceDown: 0
   ConcistencyValue: 2

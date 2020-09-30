@@ -16,6 +16,7 @@ MonoBehaviour:
   CardName: Jimari
   CardType: 0
   CardSubType: 0
+  CardImage: {fileID: 21300000, guid: 32b05611cc54b7249954ae18bf905a96, type: 3}
   EnergyCost: 3
   IsFaceDown: 0
   ConcistencyValue: 2
@@ -23,4 +24,4 @@ MonoBehaviour:
   AbsorbingValue: 0
   IsLoadedWithEnergy: 0
   TrashCost: 0
-  LocationOfCard: 0
+  LocationOfCard: 1

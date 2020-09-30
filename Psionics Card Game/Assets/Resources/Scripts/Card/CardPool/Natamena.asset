@@ -16,6 +16,7 @@ MonoBehaviour:
   CardName: Natamena
   CardType: 0
   CardSubType: 0
+  CardImage: {fileID: 21300000, guid: 569e0d7a72fe75a4ea9a236998ee04c5, type: 3}
   EnergyCost: 5
   IsFaceDown: 0
   ConcistencyValue: 3

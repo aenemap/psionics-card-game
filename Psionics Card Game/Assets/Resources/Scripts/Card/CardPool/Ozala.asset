@@ -16,6 +16,7 @@ MonoBehaviour:
   CardName: 
   CardType: 2
   CardSubType: 0
+  CardImage: {fileID: 21300000, guid: 51ff1ee5d4e740a448ff6b04d50748f6, type: 3}
   EnergyCost: 1
   IsFaceDown: 0
   ConcistencyValue: 0

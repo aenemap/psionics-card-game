@@ -16,6 +16,7 @@ MonoBehaviour:
   CardName: Farmaria
   CardType: 2
   CardSubType: 0
+  CardImage: {fileID: 21300000, guid: 88e20369b73d74b429110e022af20068, type: 3}
   EnergyCost: 2
   IsFaceDown: 0
   ConcistencyValue: 0
@@ -23,4 +24,4 @@ MonoBehaviour:
   AbsorbingValue: 0
   IsLoadedWithEnergy: 0
   TrashCost: 3
-  LocationOfCard: 0
+  LocationOfCard: 3

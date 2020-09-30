@@ -16,6 +16,7 @@ public class CardPreviewDisplay : MonoBehaviour
     public TextMeshProUGUI DefenceValue;
     public TextMeshProUGUI AbsorbingValue;
     public TextMeshProUGUI TrashCost;
+    public Image ArtImage;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,8 @@ public class CardPreviewDisplay : MonoBehaviour
             CardName.text = card.CardName;
             CardTypeAndSubType.text = card.CardType + " - " + card.CardSubType;
             EnergyCost.text = card.EnergyCost.ToString();
+            if (card.CardImage != null)
+                ArtImage.sprite = card.CardImage;
 
 
             if (card.CardType == Enums.CardType.Shield)

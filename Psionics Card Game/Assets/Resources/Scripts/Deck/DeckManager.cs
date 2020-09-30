@@ -67,7 +67,7 @@ public class DeckManager : MonoBehaviour, IPointerDownHandler
         {
             this.gameObject.SetActive(false);
         }
-        card.transform.parent = this.transform.parent;
+        card.transform.SetParent(this.transform.parent);
         card.transform.position = this.transform.position;
         HoverPreview.PreviewsAllowed = false;
         Sequence dealCardSequence = DOTween.Sequence();

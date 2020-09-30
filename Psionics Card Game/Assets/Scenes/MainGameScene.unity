@@ -513,6 +513,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fd8f1d7f83fbda4a82f07deec35c557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &859148014 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8238279177822852276, guid: ad8f608e1b0cc2945b14bb5893972201, type: 3}
+  m_PrefabInstance: {fileID: 7956385202626460072}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1089914398
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,7 +701,7 @@ MonoBehaviour:
   Hand: {fileID: 1216618038}
   cardWidth: 30
   bentAngle: 20
-  spacing: 70
+  spacing: 60
   height: 2
   cardsInHand: []
 --- !u!114 &1216618042
@@ -1149,6 +1154,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2067209547}
     m_Modifications:
+    - target: {fileID: 1582112721, guid: ad8f608e1b0cc2945b14bb5893972201, type: 3}
+      propertyPath: pivot
+      value: 
+      objectReference: {fileID: 859148014}
     - target: {fileID: 3656599059137139258, guid: ad8f608e1b0cc2945b14bb5893972201, type: 3}
       propertyPath: m_LocalPosition.x
       value: 753
@@ -1196,6 +1205,10 @@ PrefabInstance:
     - target: {fileID: 3656599059137139259, guid: ad8f608e1b0cc2945b14bb5893972201, type: 3}
       propertyPath: m_Name
       value: Discards
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656599059137139259, guid: ad8f608e1b0cc2945b14bb5893972201, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad8f608e1b0cc2945b14bb5893972201, type: 3}

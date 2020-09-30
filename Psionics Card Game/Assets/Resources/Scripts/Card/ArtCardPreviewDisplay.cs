@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class ArtCardPreviewDisplay : MonoBehaviour
@@ -12,6 +13,7 @@ public class ArtCardPreviewDisplay : MonoBehaviour
     public TextMeshProUGUI DefenceValue;
     public TextMeshProUGUI AbsorbingValue;
     public TextMeshProUGUI TrashCost;
+    public Image ArtImage;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +21,8 @@ public class ArtCardPreviewDisplay : MonoBehaviour
         if (card != null)
         {
             EnergyCost.text = card.EnergyCost.ToString();
+            if (card.CardImage != null)
+                ArtImage.sprite = card.CardImage;
 
 
             if (card.CardType == Enums.CardType.Shield || card.CardType == Enums.CardType.Test)

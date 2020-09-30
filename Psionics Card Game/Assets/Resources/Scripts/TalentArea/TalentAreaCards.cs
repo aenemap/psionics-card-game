@@ -53,7 +53,7 @@ public class TalentAreaCards : MonoBehaviour
             //var rotation = card.transform.rotation;
             var position = new Vector3(xPos, yPos, card.transform.position.z);
             card.transform.position = position;
-            card.transform.parent = this.pivot.transform;
+            card.transform.SetParent(this.pivot.transform);
             VisualsEvents.current.UpdateDraggableOriginalPosition(card, xPos, yPos);
             offSetX += cardWidth + spacing;
 
