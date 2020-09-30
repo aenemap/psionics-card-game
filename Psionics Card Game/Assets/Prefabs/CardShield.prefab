@@ -2998,7 +2998,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6168848774463064616}
-  - component: {fileID: 6832495105279770647}
   - component: {fileID: 3123653981859943734}
   m_Layer: 5
   m_Name: ArtCard
@@ -3027,19 +3026,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 220.18875, y: 168.28531}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!65 &6832495105279770647
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3870052431377888818}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 194.033, y: 136.66364, z: 0.01}
-  m_Center: {x: 0.18752415, y: 1.5049839, z: 0}
 --- !u!114 &3123653981859943734
 MonoBehaviour:
   m_ObjectHideFlags: 0

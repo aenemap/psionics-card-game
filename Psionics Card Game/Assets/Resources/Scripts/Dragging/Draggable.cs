@@ -30,6 +30,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         set { _originalParent = value; }
     }
 
+    Ray ray;
+    RaycastHit hit;
+
 
 
     void Start()
@@ -67,7 +70,16 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         Vector3 mousePos = MouseInWorldCoords();
         this.transform.position = new Vector3(mousePos.x - pointerDisplacement.x, mousePos.y - pointerDisplacement.y, transform.position.z);
-        Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.forward, Color.red);
+        //Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.up, Color.red);
+        //Debug.DrawLine(this.transform.position, Vector3.right, Color.red);
+        //ray = Camera.main.ScreenPointToRay(this.transform.parent.parent.position);
+        //if (Physics.Raycast(ray, out hit))
+        //{
+        //    if (hit.collider != null)
+        //    {
+        //        Debug.Log("HIT COLLIDER => " + hit.collider.name.ToString());
+        //    }
+        //}
 
     }
 
