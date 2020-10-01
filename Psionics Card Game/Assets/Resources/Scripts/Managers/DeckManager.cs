@@ -72,7 +72,7 @@ public class DeckManager : MonoBehaviour, IPointerDownHandler
         HoverPreview.PreviewsAllowed = false;
         Sequence dealCardSequence = DOTween.Sequence();
 
-        dealCardSequence.Append(card.transform.DOLocalMove(new Vector3(-734, 139, card.transform.position.z), time).SetEase(Ease.OutQuint).OnComplete(() =>
+        dealCardSequence.Append(card.transform.DOMove(new Vector3(-734, 139, card.transform.position.z), time).SetEase(Ease.OutQuint).OnComplete(() =>
         {
             card.StartRotation(Enums.CardState.FaceUp);
             //CardRotation cardRotation = card.transform.GetComponent<CardRotation>();
@@ -83,7 +83,7 @@ public class DeckManager : MonoBehaviour, IPointerDownHandler
             //}
         }));
 
-        dealCardSequence.Append(card.transform.DOLocalMove(new Vector3(0, -166, card.transform.position.z), time).SetDelay(0.5f).SetEase(Ease.OutQuint));
+        dealCardSequence.Append(card.transform.DOMove(new Vector3(0, -166, card.transform.position.z), time).SetDelay(0.5f).SetEase(Ease.OutQuint));
         dealCardSequence.OnComplete(() =>
         {
             HandAreaEvents.current.AddCardToHand(card);
