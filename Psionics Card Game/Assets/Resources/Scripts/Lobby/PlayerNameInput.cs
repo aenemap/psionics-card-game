@@ -14,6 +14,7 @@ public class PlayerNameInput : MonoBehaviour
     [SerializeField] private GameObject landingPage = null;
 
     public static string DisplayName { get; private set; }
+    public static string AvatarName { get; private set; }
 
     public const string PlayerPrefsNameKey = "PlayerName";
 
@@ -47,6 +48,7 @@ public class PlayerNameInput : MonoBehaviour
         }
         else
         {
+            AvatarName = PlayerPrefs.GetString(avatarSelection.PlayerAvatarKey);
             landingPage.SetActive(true);
             this.gameObject.SetActive(false);
         }

@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.Runtime.InteropServices;
 using System;
+using System.Linq;
 
 public class NetworkRoomPlayerLobby : NetworkBehaviour
 {
@@ -13,12 +14,16 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
     [SerializeField] private GameObject lobbyUI = null;
     [SerializeField] private TMP_Text[] playerNameTexts = new TMP_Text[2];
     [SerializeField] private TMP_Text[] playerReadyTexts = new TMP_Text[2];
+    [SerializeField] private Image[] playerAvatars = new Image[2];
     [SerializeField] private Button startGameButton = null;
 
     [SyncVar(hook = nameof(HandleDisplayNameChanged))]
     public string DisplayName = "Loading...";
     [SyncVar(hook = nameof(HandleReadyStatusChanged))]
     public bool IsReady = false;
+    [SyncVar(hook = nameof(HandleAvatarNameChanged))]
+    public string AvatarName = string.Empty;
+
 
     private bool isLeader;
 
@@ -45,6 +50,7 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
     public override void OnStartAuthority()
     {
         CmdSetDisplayName(PlayerNameInput.DisplayName);
+        CmdSetAvatarName(PlayerNameInput.AvatarName);
         lobbyUI.SetActive(true);
     }
 
@@ -63,6 +69,7 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
 
     public void HandleReadyStatusChanged(bool oldValue, bool newValue) => UpdateDisplay();
     public void HandleDisplayNameChanged(string oldValue, string newValue) => UpdateDisplay();
+    public void HandleAvatarNameChanged(string oldValue, string newValue) => UpdateDisplay();
 
     private void UpdateDisplay()
     {
@@ -80,6 +87,8 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
             return;
         }
 
+        List<Sprite> allAvatars = Resources.LoadAll<Sprite>("Images/PlayerAvatars").ToList();
+
         for(int i = 0; i < playerNameTexts.Length; i++)
         {
             playerNameTexts[i].text = "Waiting For Player...";
@@ -90,6 +99,7 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
         {
             playerNameTexts[i].text = Room.RoomPlayers[i].DisplayName;
             playerReadyTexts[i].text = Room.RoomPlayers[i].IsReady ? "<color=green>Ready</color>" : "<color=red>Not Ready</color>";
+            playerAvatars[i].sprite = allAvatars.Where(w => w.name == Room.RoomPlayers[i].AvatarName).FirstOrDefault();
 
         }
     }
@@ -104,6 +114,12 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
     private void CmdSetDisplayName(string displayName)
     {
         DisplayName = displayName;
+    }
+
+    [Command]
+    private void CmdSetAvatarName(string avatarName)
+    {
+        AvatarName = avatarName;
     }
 
     [Command]
