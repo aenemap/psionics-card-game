@@ -5,6 +5,7 @@ using Mirror;
 using TMPro;
 using UnityEngine.UI;
 using System.Runtime.InteropServices;
+using System;
 
 public class NetworkRoomPlayerLobby : NetworkBehaviour
 {
@@ -53,6 +54,7 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
         UpdateDisplay();
     }
 
+    [Obsolete]
     public override void OnNetworkDestroy()
     {
         Room.RoomPlayers.Remove(this);

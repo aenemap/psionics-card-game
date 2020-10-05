@@ -10,12 +10,17 @@ public class PlayerNameInput : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TMP_InputField nameInputField = null;
     [SerializeField] private Button continueButton = null;
+    [SerializeField] private AvatarSelection avatarSelection = null;
+    [SerializeField] private GameObject landingPage = null;
 
     public static string DisplayName { get; private set; }
 
     public const string PlayerPrefsNameKey = "PlayerName";
 
-    private void Start() => SetUpInputField();
+    private void Start()
+    {
+        SetUpInputField();
+    }
 
     private void SetUpInputField()
     {
@@ -35,5 +40,15 @@ public class PlayerNameInput : MonoBehaviour
     {
         DisplayName = nameInputField.text;
         PlayerPrefs.SetString(PlayerPrefsNameKey, DisplayName);
+        if (!PlayerPrefs.HasKey(avatarSelection.PlayerAvatarKey) || PlayerPrefs.GetString(avatarSelection.PlayerAvatarKey) == string.Empty)
+        {
+            Debug.Log("Please choose an avatar");
+            return;
+        }
+        else
+        {
+            landingPage.SetActive(true);
+            this.gameObject.SetActive(false);
+        }
     }
 }

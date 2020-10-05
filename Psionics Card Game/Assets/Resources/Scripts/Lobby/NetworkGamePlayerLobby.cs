@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.Runtime.InteropServices;
 using UnityEngine.Video;
+using System;
 
 public class NetworkGamePlayerLobby : NetworkBehaviour
 {
@@ -32,6 +33,7 @@ public class NetworkGamePlayerLobby : NetworkBehaviour
         Room.GamePlayers.Add(this);
     }
 
+    [Obsolete]
     public override void OnNetworkDestroy()
     {
         Room.GamePlayers.Remove(this);
