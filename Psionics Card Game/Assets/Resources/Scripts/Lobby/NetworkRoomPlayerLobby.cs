@@ -29,6 +29,7 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
 
     public bool IsLeader
     {
+        get { return isLeader; }
         set 
         {
             isLeader = value;
@@ -36,14 +37,14 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
         }
     }
 
-    private NetworkManagerLobby room;
+    private NetworkManagerCardGame room;
 
-    private NetworkManagerLobby Room
+    private NetworkManagerCardGame Room
     {
         get
         {
             if (room != null) { return room; }
-            return room = NetworkManager.singleton as NetworkManagerLobby;
+            return room = NetworkManager.singleton as NetworkManagerCardGame;
         }
     }
 

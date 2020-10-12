@@ -8,7 +8,6 @@ public class AvatarSelection : MonoBehaviour, IPointerClickHandler, IPointerEnte
 {
     [SerializeField] private GameObject highlightAvatar = null;
 
-    public string PlayerAvatarKey = "PlayerAvatar";
     private bool _isSelected;
 
     public static string AvatarName { get; set; }
@@ -26,9 +25,9 @@ public class AvatarSelection : MonoBehaviour, IPointerClickHandler, IPointerEnte
     private void Start()
     {
         originalColor = highlightAvatar.GetComponent<Image>().color;
-        if (PlayerPrefs.HasKey(PlayerAvatarKey))
+        if (PlayerPrefs.HasKey(Enums.PlayerPrefKeys.PlayerAvatar.ToString()))
         {
-            AvatarName = PlayerPrefs.GetString(PlayerAvatarKey);
+            AvatarName = PlayerPrefs.GetString(Enums.PlayerPrefKeys.PlayerAvatar.ToString());
             if (GetAvatarName(this.transform) == AvatarName)
                 IsSelected = true;
         }
@@ -50,13 +49,13 @@ public class AvatarSelection : MonoBehaviour, IPointerClickHandler, IPointerEnte
             highlightAvatar.GetComponent<Image>().color = new Color32(125, 255, 107, 255);
             highlightAvatar.SetActive(true);
             string avatarName = GetAvatarName(this.transform);
-            PlayerPrefs.SetString(PlayerAvatarKey, avatarName);
+            PlayerPrefs.SetString(Enums.PlayerPrefKeys.PlayerAvatar.ToString(), avatarName);
         }
         else
         {
             highlightAvatar.SetActive(false);
             highlightAvatar.GetComponent<Image>().color = originalColor;
-            PlayerPrefs.SetString(PlayerAvatarKey, string.Empty);
+            PlayerPrefs.SetString(Enums.PlayerPrefKeys.PlayerAvatar.ToString(), string.Empty);
         }
     }
 

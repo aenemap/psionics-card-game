@@ -10,13 +10,10 @@ public class PlayerNameInput : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TMP_InputField nameInputField = null;
     [SerializeField] private Button continueButton = null;
-    [SerializeField] private AvatarSelection avatarSelection = null;
     [SerializeField] private GameObject landingPage = null;
 
     public static string DisplayName { get; private set; }
     public static string AvatarName { get; private set; }
-
-    public const string PlayerPrefsNameKey = "PlayerName";
 
     private void Start()
     {
@@ -25,9 +22,9 @@ public class PlayerNameInput : MonoBehaviour
 
     private void SetUpInputField()
     {
-        if (!PlayerPrefs.HasKey(PlayerPrefsNameKey)) { return; }
+        if (!PlayerPrefs.HasKey(Enums.PlayerPrefKeys.PlayerName.ToString())) { return; }
 
-        string defaultName = PlayerPrefs.GetString(PlayerPrefsNameKey);
+        string defaultName = PlayerPrefs.GetString(Enums.PlayerPrefKeys.PlayerName.ToString());
         nameInputField.text = defaultName;
         SetPlayerName(defaultName);
     }
@@ -40,15 +37,15 @@ public class PlayerNameInput : MonoBehaviour
     public void SavePlayerName()
     {
         DisplayName = nameInputField.text;
-        PlayerPrefs.SetString(PlayerPrefsNameKey, DisplayName);
-        if (!PlayerPrefs.HasKey(avatarSelection.PlayerAvatarKey) || PlayerPrefs.GetString(avatarSelection.PlayerAvatarKey) == string.Empty)
+        PlayerPrefs.SetString(Enums.PlayerPrefKeys.PlayerName.ToString(), DisplayName);
+        if (!PlayerPrefs.HasKey(Enums.PlayerPrefKeys.PlayerAvatar.ToString()) || PlayerPrefs.GetString(Enums.PlayerPrefKeys.PlayerAvatar.ToString()) == string.Empty)
         {
             Debug.Log("Please choose an avatar");
             return;
         }
         else
         {
-            AvatarName = PlayerPrefs.GetString(avatarSelection.PlayerAvatarKey);
+            AvatarName = PlayerPrefs.GetString(Enums.PlayerPrefKeys.PlayerAvatar.ToString());
             landingPage.SetActive(true);
             this.gameObject.SetActive(false);
         }

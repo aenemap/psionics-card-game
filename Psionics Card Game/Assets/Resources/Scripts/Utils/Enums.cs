@@ -41,4 +41,10 @@ public static class Enums
         Discards
     }
 
+    public enum PlayerPrefKeys
+    {
+        PlayerName,
+        PlayerAvatar
+    }
+
 }

@@ -13,16 +13,27 @@ public class NetworkGamePlayerLobby : NetworkBehaviour
 
     [SyncVar]
     private string displayName = "Loading...";
+    [SyncVar]
+    private string avatarName = string.Empty;
+
+    private bool _isLeader;
+    public bool IsLeader
+    {
+        get { return _isLeader; }
+        set { _isLeader = value; }
+    }
 
 
-    private NetworkManagerLobby room;
 
-    private NetworkManagerLobby Room
+
+    private NetworkManagerCardGame room;
+
+    private NetworkManagerCardGame Room
     {
         get
         {
             if (room != null) { return room; }
-            return room = NetworkManager.singleton as NetworkManagerLobby;
+            return room = NetworkManager.singleton as NetworkManagerCardGame;
         }
     }
 
@@ -43,5 +54,21 @@ public class NetworkGamePlayerLobby : NetworkBehaviour
     public void SetDisplayName(string displayName)
     {
         this.displayName = displayName;
+    }
+
+    public string GetDisplayName()
+    {
+        return displayName;
+    }
+
+    [Server]
+    public void SetAvatarName(string avatarName)
+    {
+        this.avatarName = avatarName;
+    }
+
+    public string GetAvatarName()
+    {
+        return avatarName;
     }
 }

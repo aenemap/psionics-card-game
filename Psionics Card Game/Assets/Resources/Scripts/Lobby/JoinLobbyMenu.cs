@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class JoinLobbyMenu : MonoBehaviour
 {
-    [SerializeField] private NetworkManagerLobby networkManager = null;
+    [SerializeField] private NetworkManagerCardGame networkManager = null;
 
     [Header("UI")]
     [SerializeField] private GameObject landingPagePanel = null;
@@ -17,14 +17,14 @@ public class JoinLobbyMenu : MonoBehaviour
 
     private void OnEnable()
     {
-        NetworkManagerLobby.OnClientConnected += HandleClientConnected;
-        NetworkManagerLobby.OnClientDisconnected += HandleClientDisconnected;
+        NetworkManagerCardGame.OnClientConnected += HandleClientConnected;
+        NetworkManagerCardGame.OnClientDisconnected += HandleClientDisconnected;
     }
 
     private void OnDisable()
     {
-        NetworkManagerLobby.OnClientConnected -= HandleClientConnected;
-        NetworkManagerLobby.OnClientDisconnected -= HandleClientDisconnected;
+        NetworkManagerCardGame.OnClientConnected -= HandleClientConnected;
+        NetworkManagerCardGame.OnClientDisconnected -= HandleClientDisconnected;
     }
 
     public void JoinLobby()
