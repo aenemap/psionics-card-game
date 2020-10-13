@@ -514,8 +514,6 @@ GameObject:
   - component: {fileID: 200343733}
   - component: {fileID: 200343737}
   - component: {fileID: 200343736}
-  - component: {fileID: 200343735}
-  - component: {fileID: 200343734}
   m_Layer: 5
   m_Name: PlayerOpponent
   m_TagString: Untagged
@@ -544,36 +542,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 216.93243, y: 199.67673}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &200343734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 200343732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adeac462600f23b489cca8a6aecd2edb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
---- !u!114 &200343735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 200343732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 2651903644
-  serverOnly: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!114 &200343736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2381,7 +2349,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1211048668}
-  - component: {fileID: 1211048669}
   m_Layer: 0
   m_Name: Deck
   m_TagString: Untagged
@@ -2404,20 +2371,6 @@ Transform:
   m_Father: {fileID: 2067209547}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1211048669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1211048667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fd1de94644c7bb4f87d6a63f19374ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardManager: {fileID: 1495618439086376653, guid: 1925713fdcf7877489ae59ce58679b92, type: 3}
-  time: 0.3
 --- !u!1 &1216618038
 GameObject:
   m_ObjectHideFlags: 0
@@ -2586,8 +2539,6 @@ GameObject:
   - component: {fileID: 1559284646}
   - component: {fileID: 1559284650}
   - component: {fileID: 1559284649}
-  - component: {fileID: 1559284648}
-  - component: {fileID: 1559284647}
   m_Layer: 5
   m_Name: Player
   m_TagString: Untagged
@@ -2616,36 +2567,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 216.93243, y: 199.67673}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1559284647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1559284645}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adeac462600f23b489cca8a6aecd2edb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
---- !u!114 &1559284648
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1559284645}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 1742674535
-  serverOnly: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!114 &1559284649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2859,7 +2780,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1585043820}
-  - component: {fileID: 1585043821}
   m_Layer: 0
   m_Name: OpDeck
   m_TagString: Untagged
@@ -2882,20 +2802,6 @@ Transform:
   m_Father: {fileID: 888956349}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1585043821
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1585043819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fd1de94644c7bb4f87d6a63f19374ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardManager: {fileID: 1495618439086376653, guid: 1925713fdcf7877489ae59ce58679b92, type: 3}
-  time: 0.3
 --- !u!1 &1586726565
 GameObject:
   m_ObjectHideFlags: 0

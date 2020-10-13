@@ -1720,7 +1720,7 @@ MonoBehaviour:
   menuScene: Assets/Scenes/LobbyScene.unity
   mainGameScene: Assets/Scenes/MainGameScene.unity
   roomPlayerPrefab: {fileID: 3764235066478410177, guid: 3d0b85f957ef4b34e9b6f581b3f19980, type: 3}
-  gamePlayerPrefab: {fileID: 5891986783227466562, guid: 15153d3c20638b340bb090d4ef24ddea, type: 3}
+  gamePlayerPrefab: {fileID: 53203269590938220, guid: 15153d3c20638b340bb090d4ef24ddea, type: 3}
   mainGameManagerPrefab: {fileID: 7841557395579207999, guid: 2fec0e713657c32478755fa4282c48a7, type: 3}
   prefabForPlayer: {fileID: 3532115879446385927, guid: e5f0c059c2521c94bb850cf7762de984, type: 3}
 --- !u!114 &673041300

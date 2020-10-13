@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4437302395096508818}
   - component: {fileID: 4322577488795464695}
+  - component: {fileID: 3520903050105540569}
   m_Layer: 0
   m_Name: DeckManager
   m_TagString: Untagged
@@ -43,4 +44,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fd1de94644c7bb4f87d6a63f19374ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deck: {fileID: 283378704831264202, guid: 3db6da5cf4f0ba843aa50984077b4b66, type: 3}
+  cardManager: {fileID: 0}
+  time: 0.3
+--- !u!114 &3520903050105540569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302309699572141885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0

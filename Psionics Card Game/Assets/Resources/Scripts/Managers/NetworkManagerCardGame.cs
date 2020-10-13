@@ -163,9 +163,9 @@ public class NetworkManagerCardGame : NetworkManager
             {
                 var conn = GamePlayers[i].connectionToClient;
                 var playerInstance = Instantiate(prefabForPlayer);
-                playerInstance.SetIsOpponent(GamePlayers[i].IsLeader);
                 playerInstance.SetPlayerName(GamePlayers[i].GetDisplayName());
                 playerInstance.SetAvatarName(GamePlayers[i].GetAvatarName());
+                playerInstance.SetDeckId(1);
                 NetworkServer.Spawn(playerInstance.gameObject, conn);
             }
 

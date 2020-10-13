@@ -14,13 +14,26 @@ public class Player : NetworkBehaviour
     private bool isOpponent;
     [SyncVar]
     private string avatarName;
+    [SyncVar]
+    private int deckId;
 
     private GameObject playerNameText;
     private GameObject playerAvatarImage;
+
+    #region Server
+    public override void OnStartServer()
+    {
+        
+    }
+    #endregion
+
+    #region Client
     public override void OnStartClient()
     {
         SetUpPlayer();
     }
+
+    #endregion
 
     private void SetUpPlayer()
     {
@@ -49,19 +62,33 @@ public class Player : NetworkBehaviour
             avatarImage.sprite = avatar;
         }
     }
+
+    [Server]
     public void SetPlayerName(string playerName)
     {
         this.playerName = playerName;
     }
 
-    public void SetIsOpponent(bool isOpponent)
+    public string GetPlayerName()
     {
-        this.isOpponent = isOpponent;
+        return playerName;
     }
 
+    [Server]
     public void SetAvatarName(string avatarName)
     {
         this.avatarName = avatarName;
+    }
+
+    [Server]
+    public void SetDeckId(int deckId)
+    {
+        this.deckId = deckId;
+    }
+
+    public int GetDeckId()
+    {
+        return deckId;
     }
 
 }
