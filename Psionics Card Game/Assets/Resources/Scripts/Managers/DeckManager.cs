@@ -60,7 +60,7 @@ public class DeckManager : MonoBehaviour, IPointerDownHandler
 
     private void DealCard()
     {
-        GameObject card = cardManager.GetCard(cardsInDeck[0]);
+        GameObject card = cardManager.GetCard(cardsInDeck[0].CardId);
         if (cardsInDeck.Count > 0)
             cardsInDeck.RemoveAt(0);
         if (cardsInDeck.Count == 0)
@@ -86,7 +86,7 @@ public class DeckManager : MonoBehaviour, IPointerDownHandler
         dealCardSequence.Append(card.transform.DOMove(new Vector3(0, -166, card.transform.position.z), time).SetDelay(0.5f).SetEase(Ease.OutQuint));
         dealCardSequence.OnComplete(() =>
         {
-            HandAreaEvents.current.AddCardToHand(card);
+            HandAreaEvents.current.AddCardToHand(card, null);
             HoverPreview.PreviewsAllowed = true;
         });
     }
@@ -141,7 +141,7 @@ public class DeckManager : MonoBehaviour, IPointerDownHandler
         return decks;
     }
 
-    private void ShuffleDeck<T>(List<T> cards)
+    public void ShuffleDeck<T>(List<T> cards)
     {
         System.Random rng = new System.Random();
         int n = cards.Count;

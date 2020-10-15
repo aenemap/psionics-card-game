@@ -14,7 +14,8 @@ public class HandAreaEvents : MonoBehaviour
 
     public event Action onBendHand;
     public event Action<int, bool> onRemoveCardFromHand;
-    public event Action<GameObject> onAddCardToHand;
+    public event Action<GameObject, Transform> onAddCardToHand;
+    public event Action<List<GameObject>, Transform> onAddCardBendHand;
 
     public void BendHand()
     {
@@ -29,8 +30,13 @@ public class HandAreaEvents : MonoBehaviour
         onRemoveCardFromHand?.Invoke(cardId, bent);
     }
 
-    public void AddCardToHand(GameObject card)
+    public void AddCardToHand(GameObject card, Transform parent)
     {
-        onAddCardToHand?.Invoke(card);
+        onAddCardToHand?.Invoke(card, parent);
+    }
+
+    public void AddCardBendHand(List<GameObject> cards, Transform parent)
+    {
+        onAddCardBendHand?.Invoke(cards,parent);
     }
 }

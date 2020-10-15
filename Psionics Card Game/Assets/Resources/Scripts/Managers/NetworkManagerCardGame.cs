@@ -20,7 +20,9 @@ public class NetworkManagerCardGame : NetworkManager
     [Header("Game")]
     [SerializeField] private NetworkGamePlayerLobby gamePlayerPrefab = null;
     //[SerializeField] private GameObject playerSpawnSystem = null;
-    [SerializeField] private GameObject mainGameManagerPrefab = null;
+    //[SerializeField] private GameObject mainGameManagerPrefab = null;
+    [SerializeField] private GameObject handPivotPrefab = null;
+
 
     [Header("Players")]
     [SerializeField] private Player prefabForPlayer = null;
@@ -157,17 +159,20 @@ public class NetworkManagerCardGame : NetworkManager
     {
         if (newSceneName.Equals("MainGameScene"))
         {
-            GameObject mainGameManagerInstance = Instantiate(mainGameManagerPrefab);
-            NetworkServer.Spawn(mainGameManagerInstance);
+            NetworkConnection conn = null;
             for (int i = 0; i < GamePlayers.Count; i++)
             {
-                var conn = GamePlayers[i].connectionToClient;
+                conn = GamePlayers[i].connectionToClient;
                 var playerInstance = Instantiate(prefabForPlayer);
                 playerInstance.SetPlayerName(GamePlayers[i].GetDisplayName());
                 playerInstance.SetAvatarName(GamePlayers[i].GetAvatarName());
                 playerInstance.SetDeckId(1);
                 NetworkServer.Spawn(playerInstance.gameObject, conn);
+                var handPivotInstance = Instantiate(handPivotPrefab);
+                NetworkServer.Spawn(handPivotInstance, conn);
             }
+            //GameObject mainGameManagerInstance = Instantiate(mainGameManagerPrefab);
+            //NetworkServer.Spawn(mainGameManagerInstance, conn);
 
         }
     }

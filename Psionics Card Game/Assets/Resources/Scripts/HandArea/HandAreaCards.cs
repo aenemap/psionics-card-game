@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Diagnostics;
 using UnityEngine.UI;
 using DG.Tweening;
+using Mirror;
 
 public class HandAreaCards : MonoBehaviour
 {
@@ -32,18 +33,24 @@ public class HandAreaCards : MonoBehaviour
         HandAreaEvents.current.onBendHand += OnBendHand;
         HandAreaEvents.current.onRemoveCardFromHand += OnRemoveCardFromHand;
         HandAreaEvents.current.onAddCardToHand += OnAddCardToHand;
+        HandAreaEvents.current.onAddCardBendHand += AddCardBendHand;
     }
 
     void Start()
     {
     }
 
-    private void OnAddCardToHand(GameObject card)
+    private void AddCardBendHand(List<GameObject> cards, Transform parent)
+    {
+        Bent(cards, parent);
+    }
+
+    private void OnAddCardToHand(GameObject card, Transform parent)
     {
 
         //cardsInHand.Insert(0, card);
         cardsInHand.Add(card);
-        Bent(cardsInHand);
+        Bent(cardsInHand, parent);
     }
 
     private void OnRemoveCardFromHand(int cardId, bool bent)
@@ -54,15 +61,15 @@ public class HandAreaCards : MonoBehaviour
         }).ToList();
 
         if (bent)
-            Bent(cardsInHand);
+            Bent(cardsInHand, pivot);
     }
 
     private void OnBendHand()
     {
-        Bent(cardsInHand);
+        Bent(cardsInHand, pivot);
     }
 
-    public void Bent(List<GameObject> cards)
+    public void Bent(List<GameObject> cards, Transform parent)
     {
         if (cards == null || cards.Count < 1)
             return;
@@ -115,7 +122,7 @@ public class HandAreaCards : MonoBehaviour
             card.transform.DOMove(position, 0.5f).SetEase(Ease.OutQuint).OnComplete(() => {
                 VisualsEvents.current.UpdateDraggableOriginalPosition(card, -1f, -1f);
             });
-            card.transform.SetParent(pivot.transform);
+            card.transform.SetParent(parent, false);
             card.SetCardLocation(Enums.CardLocation.HandArea);
             offsetX += cardWidth + spacing;
 

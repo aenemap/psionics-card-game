@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 public class Player : NetworkBehaviour
 {
+    [SerializeField] private CardManager cardManager;
+    [SerializeField] private DeckManager deckManager;
+
     [SyncVar]
     private string playerName;
     [SyncVar]
@@ -19,18 +22,99 @@ public class Player : NetworkBehaviour
 
     private GameObject playerNameText;
     private GameObject playerAvatarImage;
+    
+    private GameObject playerHandPivot;
+
+    public List<Card> cardsInDeck = new List<Card>();
+
+    private int initialDealOfCards = 5;
+
 
     #region Server
     public override void OnStartServer()
     {
-        
+        //Debug.Log("Server playerName=>" + playerName);
+        //Debug.Log("Server hasAuthority => " + hasAuthority);
+        //Debug.Log("Server isLocalPlayer=>" + isLocalPlayer);
+        //Debug.Log("Server isCLient=>" + isClient);
+        //Debug.Log("Server isCLientOnly=>" + isClientOnly);
+        //Debug.Log("Server isserver=>" + isServer);
+        //Debug.Log("Server isserveronly=>" + isServerOnly);
+        var playerDeck = deckManager.GetDeckById(deckId);
+        foreach (Card crd in playerDeck.DeckList)
+        {
+            cardsInDeck.Add(crd);
+        }
+
+
+    }
+    [Command]
+    private void CmdSpawnCards()
+    {
+        GameObject parentHandPivot = null;
+        for (int i = 0; i < initialDealOfCards; i++)
+        {
+            GameObject card = cardManager.GetCard(cardsInDeck[i].CardId);
+            List<NetworkIdentity> networkIdentities = GameObject.FindObjectsOfType<NetworkIdentity>().ToList();
+            if (hasAuthority)
+            {
+                foreach (NetworkIdentity ni in networkIdentities)
+                {
+                    HandPivots handPivot = ni.GetComponent<HandPivots>();
+                    if (handPivot != null)
+                    {
+                        if (ni.netId == handPivot.playerHandPivotNetId)
+                        {
+                            parentHandPivot = handPivot.gameObject;
+                            Debug.Log("HandPivot netId => " + handPivot.netIdentity.netId);
+                        }
+                    }
+                        
+                }
+            }
+            else
+            {
+                foreach (NetworkIdentity ni in networkIdentities)
+                {
+                    HandPivots handPivot = ni.GetComponent<HandPivots>();
+                    if (handPivot != null)
+                    {
+                        if (ni.netId == handPivot.opPlayerHandPivotNetId)
+                        {
+                            parentHandPivot = handPivot.gameObject;
+                            Debug.Log("HandPivot netId => " + handPivot.netIdentity.netId);
+                        }
+                    }
+                        
+                }
+            }
+            
+            card.transform.SetParent(parentHandPivot.transform);
+            NetworkServer.Spawn(card, connectionToClient);
+            RpcSetUpCard(card, parentHandPivot);
+        }
+    }
+
+    [ClientRpc]
+    private void RpcSetUpCard(GameObject card, GameObject parent)
+    {
+        card.transform.SetParent(parent.transform, false);
     }
     #endregion
 
     #region Client
     public override void OnStartClient()
     {
+        //Debug.Log("Client playerName=>" + playerName);
+        //Debug.Log("Client hasAuthority => " + hasAuthority);
+        //Debug.Log("Client isLocalPlayer=>" + isLocalPlayer);
+        //Debug.Log("Client isCLient=>" + isClient);
+        //Debug.Log("Client isCLientOnly=>" + isClientOnly);
+        //Debug.Log("Client isserver=>" + isServer);
+        //Debug.Log("Client isserveronly=>" + isServerOnly);
         SetUpPlayer();
+        if (hasAuthority)
+            CmdSpawnCards();
     }
 
     #endregion
@@ -41,11 +125,13 @@ public class Player : NetworkBehaviour
         {
             playerNameText = GameObject.Find("PlayerName");
             playerAvatarImage = GameObject.Find("PlayerAvatar");
+            //playerHandPivot = GameObject.Find("HandPivot");
         }
         else
         {
             playerNameText = GameObject.Find("OpPlayerName");
             playerAvatarImage = GameObject.Find("OpPlayerAvatar");
+            //playerHandPivot = GameObject.Find("OpHandPivot");
         }
             
 

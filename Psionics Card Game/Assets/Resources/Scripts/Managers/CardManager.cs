@@ -31,9 +31,9 @@ public class CardManager : MonoBehaviour
         return allCards;
     }
 
-    public GameObject GetCard (Card crd)
+    public GameObject GetCard (int cardId)
     {
-        Card findCard = GetCardsFromResource().Where(w => w.CardId == crd.CardId).FirstOrDefault();
+        Card findCard = GetCardsFromResource().Where(w => w.CardId == cardId).FirstOrDefault();
         card = GetTypeOfCard(findCard);
         var cardDisplay = card.GetComponent<CardDisplay>();
         var cardPreview = card.transform.Find("CardPreview");
