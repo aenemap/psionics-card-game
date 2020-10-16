@@ -12,8 +12,8 @@ public struct CardItem
 
 public class MainGameManager : NetworkBehaviour
 {
-    [SerializeField] private CardManager cardManager;
-    [SerializeField] private DeckManager deckManager;
+    [SerializeField] private CardManager cardManager = null;
+    [SerializeField] private DeckManager deckManager = null;
 
     SyncList<CardItem> playerDeck = new SyncList<CardItem>();
     SyncList<CardItem> opponentPlayerDeck = new SyncList<CardItem>();
@@ -29,7 +29,7 @@ public class MainGameManager : NetworkBehaviour
         List<NetworkIdentity> networkIdentities = GameObject.FindObjectsOfType<NetworkIdentity>().ToList();
         foreach (NetworkIdentity ni in networkIdentities)
         {
-            Player player = ni.GetComponent<Player>();
+            GamePlayer player = ni.GetComponent<GamePlayer>();
             if (player != null)
             {
                 var playerDeck = deckManager.GetDeckById(player.GetDeckId());
@@ -113,7 +113,7 @@ public class MainGameManager : NetworkBehaviour
 
         foreach (NetworkIdentity ni in networkIdentities)
         {
-            Player player = ni.GetComponent<Player>();
+            GamePlayer player = ni.GetComponent<GamePlayer>();
             if (player != null)
             {
                 if (player.hasAuthority)

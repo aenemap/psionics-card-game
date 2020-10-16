@@ -1,180 +1,126 @@
-﻿using Mirror;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using Mirror;
+using UnityEngine.SceneManagement;
 
 public class Player : NetworkBehaviour
 {
-    [SerializeField] private CardManager cardManager;
-    [SerializeField] private DeckManager deckManager;
+    public static Player localPlayer;
 
+    NetworkMatchChecker networkMatchChecker;
     [SyncVar]
-    private string playerName;
+    public string MatchID;
     [SyncVar]
-    private bool isOpponent;
-    [SyncVar]
-    private string avatarName;
-    [SyncVar]
-    private int deckId;
+    public int PlayerIndex;
 
-    private GameObject playerNameText;
-    private GameObject playerAvatarImage;
-    
-    private GameObject playerHandPivot;
-
-    public List<Card> cardsInDeck = new List<Card>();
-
-    private int initialDealOfCards = 5;
-
-
-    #region Server
-    public override void OnStartServer()
+    private void Start()
     {
-        //Debug.Log("Server playerName=>" + playerName);
-        //Debug.Log("Server hasAuthority => " + hasAuthority);
-        //Debug.Log("Server isLocalPlayer=>" + isLocalPlayer);
-        //Debug.Log("Server isCLient=>" + isClient);
-        //Debug.Log("Server isCLientOnly=>" + isClientOnly);
-        //Debug.Log("Server isserver=>" + isServer);
-        //Debug.Log("Server isserveronly=>" + isServerOnly);
-        var playerDeck = deckManager.GetDeckById(deckId);
-        foreach (Card crd in playerDeck.DeckList)
+        DontDestroyOnLoad(this.gameObject);
+        networkMatchChecker = GetComponent<NetworkMatchChecker>();
+
+        if (isLocalPlayer)
         {
-            cardsInDeck.Add(crd);
-        }
-
-
-    }
-    [Command]
-    private void CmdSpawnCards()
-    {
-        GameObject parentHandPivot = null;
-        for (int i = 0; i < initialDealOfCards; i++)
-        {
-            GameObject card = cardManager.GetCard(cardsInDeck[i].CardId);
-            List<NetworkIdentity> networkIdentities = GameObject.FindObjectsOfType<NetworkIdentity>().ToList();
-            if (hasAuthority)
-            {
-                foreach (NetworkIdentity ni in networkIdentities)
-                {
-                    HandPivots handPivot = ni.GetComponent<HandPivots>();
-                    if (handPivot != null)
-                    {
-                        if (ni.netId == handPivot.playerHandPivotNetId)
-                        {
-                            parentHandPivot = handPivot.gameObject;
-                            Debug.Log("HandPivot netId => " + handPivot.netIdentity.netId);
-                        }
-                    }
-                        
-                }
-            }
-            else
-            {
-                foreach (NetworkIdentity ni in networkIdentities)
-                {
-                    HandPivots handPivot = ni.GetComponent<HandPivots>();
-                    if (handPivot != null)
-                    {
-                        if (ni.netId == handPivot.opPlayerHandPivotNetId)
-                        {
-                            parentHandPivot = handPivot.gameObject;
-                            Debug.Log("HandPivot netId => " + handPivot.netIdentity.netId);
-                        }
-                    }
-                        
-                }
-            }
-            
-            card.transform.SetParent(parentHandPivot.transform);
-            NetworkServer.Spawn(card, connectionToClient);
-            RpcSetUpCard(card, parentHandPivot);
-        }
-    }
-
-    [ClientRpc]
-    private void RpcSetUpCard(GameObject card, GameObject parent)
-    {
-        card.transform.SetParent(parent.transform, false);
-    }
-    #endregion
-
-    #region Client
-    public override void OnStartClient()
-    {
-        //Debug.Log("Client playerName=>" + playerName);
-        //Debug.Log("Client hasAuthority => " + hasAuthority);
-        //Debug.Log("Client isLocalPlayer=>" + isLocalPlayer);
-        //Debug.Log("Client isCLient=>" + isClient);
-        //Debug.Log("Client isCLientOnly=>" + isClientOnly);
-        //Debug.Log("Client isserver=>" + isServer);
-        //Debug.Log("Client isserveronly=>" + isServerOnly);
-        SetUpPlayer();
-        if (hasAuthority)
-            CmdSpawnCards();
-    }
-
-    #endregion
-
-    private void SetUpPlayer()
-    {
-        if (hasAuthority)
-        {
-            playerNameText = GameObject.Find("PlayerName");
-            playerAvatarImage = GameObject.Find("PlayerAvatar");
-            //playerHandPivot = GameObject.Find("HandPivot");
+            localPlayer = this;
         }
         else
         {
-            playerNameText = GameObject.Find("OpPlayerName");
-            playerAvatarImage = GameObject.Find("OpPlayerAvatar");
-            //playerHandPivot = GameObject.Find("OpHandPivot");
+            UILobby.instance.SpawnPlayerUIPrefab(this);
         }
-            
+    }
 
-        if (playerNameText != null)
+
+    //Host Game
+    public void HostGame()
+    {
+        string matchId = MatchMaker.GetRandomMatchID();        
+        CmdHostGame(matchId);
+    }
+
+    [Command]
+    private void CmdHostGame(string matchId)
+    {
+        MatchID = matchId;
+        if (MatchMaker.instance.HostGame(matchId, gameObject, out PlayerIndex))
         {
-            TextMeshProUGUI playerText = playerNameText.transform.GetComponent<TextMeshProUGUI>();
-            playerText.text = playerName;
+            Debug.Log($"Game Hosted successfully ");
+            networkMatchChecker.matchId = matchId.ToGuid();
+            TargetHostGame(true, matchId);
         }
-
-        if (playerAvatarImage != null)
+        else
         {
-            var avatar = Resources.LoadAll<Sprite>("Images/PlayerAvatars").Where(w => w.name == avatarName).FirstOrDefault();
-            Image avatarImage = playerAvatarImage.transform.GetComponent<Image>();
-            avatarImage.sprite = avatar;
+            Debug.Log($"Game Hosted failed ");
+            TargetHostGame(false, matchId);
         }
     }
 
-    [Server]
-    public void SetPlayerName(string playerName)
+    [TargetRpc]
+    private void TargetHostGame(bool success, string matchId)
     {
-        this.playerName = playerName;
+        Debug.Log($"MatchId => {matchId} == {MatchID}");
+        UILobby.instance.HostSuccess(success);
     }
 
-    public string GetPlayerName()
+    //Join Game
+
+    public void JoinGame(string matchId)
     {
-        return playerName;
+        CmdJoinGame(matchId);
     }
 
-    [Server]
-    public void SetAvatarName(string avatarName)
+    [Command]
+    private void CmdJoinGame(string matchId)
     {
-        this.avatarName = avatarName;
+        MatchID = matchId;
+        if (MatchMaker.instance.JoinGame(matchId, gameObject, out PlayerIndex))
+        {
+            Debug.Log($"Game Hosted successfully ");
+            networkMatchChecker.matchId = matchId.ToGuid();
+            TargetJoinGame(true, matchId);
+        }
+        else
+        {
+            Debug.Log($"Game Hosted failed ");
+            TargetJoinGame(false, matchId);
+        }
     }
 
-    [Server]
-    public void SetDeckId(int deckId)
+    [TargetRpc]
+    private void TargetJoinGame(bool success, string matchId)
     {
-        this.deckId = deckId;
+        MatchID = matchId;
+        Debug.Log($"MatchId => {matchId} == {MatchID}");
+        UILobby.instance.JoinSuccess(success, MatchID);
     }
 
-    public int GetDeckId()
+    //BeginGame
+
+    public void BeginGame()
     {
-        return deckId;
+        CmdBeginGame();
     }
 
+    [Command]
+    private void CmdBeginGame()
+    {
+        MatchMaker.instance.BeginGame(MatchID);
+        Debug.Log($"Game Beginning");
+        
+        
+    }
+
+    public void StartGame()
+    {
+        TargetBeginGame();
+    }
+
+    [TargetRpc]
+    private void TargetBeginGame()
+    {
+        //Debug.Log($"MatchId => {matchId} == {MatchID}");
+        //SceneManager.LoadScene(2, LoadSceneMode.Additive);
+        SceneManager.LoadScene(2);
+
+
+    }
 }

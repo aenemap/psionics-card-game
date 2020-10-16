@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 using UnityEngine;
 
 public static class ExtensionMethods 
@@ -35,5 +38,14 @@ public static class ExtensionMethods
             if (cardRotation.cardState == Enums.CardState.FaceDown && cardState == Enums.CardState.FaceUp)
                 cardRotation.StartFaceUp();
         }
+    }
+
+    public static Guid ToGuid(this string id)
+    {
+        MD5CryptoServiceProvider provider = new MD5CryptoServiceProvider();
+        byte[] inputBytes = Encoding.Default.GetBytes(id);
+        byte[] hashBytes = provider.ComputeHash(inputBytes);
+
+        return new Guid(hashBytes);
     }
 }

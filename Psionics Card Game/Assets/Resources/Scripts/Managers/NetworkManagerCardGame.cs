@@ -25,7 +25,7 @@ public class NetworkManagerCardGame : NetworkManager
 
 
     [Header("Players")]
-    [SerializeField] private Player prefabForPlayer = null;
+    [SerializeField] private GamePlayer prefabForPlayer = null;
 
 
     public static event Action OnClientConnected;
