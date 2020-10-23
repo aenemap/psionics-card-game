@@ -5,7 +5,7 @@ using Mirror;
 
 public class AutoHostClient : MonoBehaviour
 {
-    [SerializeField] private NetworkManager networkManager = null;
+    [SerializeField] private NetworkManagerPsionicsCG networkManager = null;
 
     //private void Start()
     //{

@@ -12,6 +12,11 @@ public class VisualsEvents : MonoBehaviour
         current = this;
     }
 
+    public void Start()
+    {
+        //DontDestroyOnLoad(this.gameObject);
+    }
+
     public event Action<GameObject, float, float> onUpdateDraggableOriginalPosition;
     public event Action<GameObject> onCardToSmallPreview;
     public event Action<GameObject> onCardToNormalPreview;

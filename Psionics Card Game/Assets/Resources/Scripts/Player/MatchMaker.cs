@@ -36,23 +36,39 @@ public class MatchMaker : NetworkBehaviour
     //public SyncList<Match> matches = new SyncList<Match>();
     public SyncListMatch matches = new SyncListMatch();
     public SyncList<string> matchIds = new SyncList<string>();
+    //SyncListString matchIds = new SyncListString();
 
-    [SerializeField] GameObject turnManagerPrefab;
+
+    [SerializeField] private GameObject turnManagerPrefab = null;
+    [SerializeField] private GameObject visualEventsPrefab = null;
 
     public MatchMaker()
     {
         instance = this;
     }
 
-    public bool HostGame(string matchId, GameObject player, out int playerIndex)
+    private void OnEnable()
     {
-        playerIndex = -1;
+        NetworkManagerPsionicsCG.OnServerSceneHasChanged += HandleServerSceneHasChanged;
+    }
+
+    private void OnDisable()
+    {
+        NetworkManagerPsionicsCG.OnServerSceneHasChanged -= HandleServerSceneHasChanged;
+    }
+
+    private void Start()
+    {
+        DontDestroyOnLoad(this);
+    }
+
+    public bool HostGame(string matchId, GameObject player)
+    {
         if (!matchIds.Contains(matchId))
         {
             matchIds.Add(matchId);
             matches.Add(new Match(matchId, player));
             Debug.Log($"Match Generated");
-            playerIndex = 1;
             return true;
         }
         else
@@ -63,9 +79,8 @@ public class MatchMaker : NetworkBehaviour
 
     }
 
-    public bool JoinGame(string matchId, GameObject player, out int playerIndex)
+    public bool JoinGame(string matchId, GameObject player)
     {
-        playerIndex = -1;
         if (matchIds.Contains(matchId))
         {
             matchIds.Add(matchId);
@@ -75,7 +90,6 @@ public class MatchMaker : NetworkBehaviour
                 if (matches[i].MatchId == matchId)
                 {
                     matches[i].players.Add(player);
-                    playerIndex = matches[i].players.Count;
                     break;
                 }
             }
@@ -93,10 +107,12 @@ public class MatchMaker : NetworkBehaviour
 
     public void BeginGame(string matchId)
     {
-        GameObject turnManagerInstance = Instantiate(turnManagerPrefab);
-        NetworkServer.Spawn(turnManagerInstance);
-        turnManagerInstance.GetComponent<NetworkMatchChecker>().matchId = matchId.ToGuid();
-        TurnManager turnManager = turnManagerInstance.GetComponent<TurnManager>();
+        //GameObject turnManagerInstance = Instantiate(turnManagerPrefab);
+
+        //GameObject visualEventsInstance = Instantiate(visualEventsPrefab);
+        //NetworkServer.Spawn(visualEventsInstance);
+        //turnManagerInstance.GetComponent<NetworkMatchChecker>().matchId = matchId.ToGuid();
+        //TurnManager turnManager = turnManagerInstance.GetComponent<TurnManager>();
 
         for (int i = 0; i < matches.Count; i++)
         {
@@ -105,13 +121,41 @@ public class MatchMaker : NetworkBehaviour
                 foreach (var player in matches[i].players)
                 {
                     Player plr = player.GetComponent<Player>();
-                    turnManager.AddPlayer(plr);
+                    //turnManager.AddPlayer(plr);
                     plr.StartGame();
                 }
                 break;
             }
         }
+        //NetworkServer.Spawn(turnManagerInstance);
     }
+
+    private void HandleServerSceneHasChanged(string sceneName)
+    {
+        if (sceneName == Utilities.SceneName)
+        {
+            Debug.Log($"HandleServerSceneHasChanged Scene has Changed => SceneName => {sceneName}");
+            GameObject turnManagerInstance = Instantiate(turnManagerPrefab);
+            turnManagerInstance.GetComponent<NetworkMatchChecker>().matchId = Player.localPlayer.MatchID.ToGuid();
+            TurnManager turnManager = turnManagerInstance.GetComponent<TurnManager>();
+            for (int i = 0; i < matches.Count; i++)
+            {
+                if (matches[i].MatchId == Player.localPlayer.MatchID)
+                {
+                    foreach (var player in matches[i].players)
+                    {
+                        Player plr = player.GetComponent<Player>();
+                        turnManager.AddPlayer(plr);                        
+                    }
+                    break;
+                }
+            }
+            NetworkServer.Spawn(turnManagerInstance);
+            GameObject visualEventsInstance = Instantiate(visualEventsPrefab);
+            NetworkServer.Spawn(visualEventsInstance);
+        }
+    }
+
 
     public static string GetRandomMatchID()
     {

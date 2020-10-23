@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class Utilities 
 {
+    public static string SceneName = "MainGameSceneBKP2";
     public static float CalcAreaWidth(int quantityOfCards, float cardWidth, float spacing )
     {
         var widthCards = quantityOfCards * cardWidth;
