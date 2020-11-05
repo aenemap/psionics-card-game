@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d391ebd75fc03144189e41546edd1eb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 0}
+  card: {fileID: 11400000, guid: c2073fb5c8fa2964baadb86f7210387c, type: 2}
   EnergyCost: {fileID: 5694029134642613973}
   ConsistencyValue: {fileID: 2803062265770944603}
   DefenceValue: {fileID: 0}
@@ -3502,9 +3502,10 @@ GameObject:
   - component: {fileID: 4923890760436843329}
   - component: {fileID: 651673068620632998}
   - component: {fileID: 2245094028002253702}
+  - component: {fileID: 7399351806800689366}
   m_Layer: 0
   m_Name: CardShieldAbsorbing
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3659,6 +3660,24 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
+--- !u!114 &7399351806800689366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5508129005809944509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
 --- !u!1 &5508129005927999685
 GameObject:
   m_ObjectHideFlags: 0
@@ -5423,7 +5442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e7c1ab121a74914f8c4ac0cd07c8eef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 0}
+  card: {fileID: 11400000, guid: c2073fb5c8fa2964baadb86f7210387c, type: 2}
   CardId: {fileID: 7159849963427682346}
   CardName: {fileID: 8923584975778794995}
   CardTypeAndSubType: {fileID: 5867756179227035212}

@@ -220,6 +220,7 @@ MonoBehaviour:
   - {fileID: 4572690453058151640, guid: 131085cf59c0f9642974f3bab3d1aba5, type: 3}
   - {fileID: 1302309699572141885, guid: d5ed035fb3d33f34da0ba03966705ce3, type: 3}
   - {fileID: 5592583811250922505, guid: 141ebcf105575314886d6a10fcc896de, type: 3}
+  - {fileID: 4746975657630706559, guid: bcbe8d9e487fe5340a4429c67cc6166b, type: 3}
 --- !u!4 &277023464
 Transform:
   m_ObjectHideFlags: 0

@@ -4,7 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+using Mirror;
+public class Draggable : NetworkBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     private Vector3 pointerDisplacement = Vector3.zero;
     private float zDisplacement;
@@ -56,6 +57,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (!this.hasAuthority)
+            return;
         GetComponent<CanvasGroup>().blocksRaycasts = false;
         HoverPreview.PreviewsAllowed = false;
         zDisplacement = -Camera.main.transform.position.z + transform.position.z;
@@ -66,6 +69,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!this.hasAuthority)
+            return;
         //Debug.Log("OnDrag");
 
         Vector3 mousePos = MouseInWorldCoords();

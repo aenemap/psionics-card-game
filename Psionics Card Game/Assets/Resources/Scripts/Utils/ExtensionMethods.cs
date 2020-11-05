@@ -40,6 +40,24 @@ public static class ExtensionMethods
         }
     }
 
+    public static Transform FindChildInHierarchy(this GameObject gameObject, Transform parent, string childToFind)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == childToFind)
+            {
+                return child;
+            }
+            else if (child.childCount > 0)
+            {
+                var result =  FindChildInHierarchy(gameObject, child, childToFind);
+                if (result != null)
+                    return result;
+            }
+        }
+        return null;
+    }
+
     public static Guid ToGuid(this string id)
     {
         MD5CryptoServiceProvider provider = new MD5CryptoServiceProvider();

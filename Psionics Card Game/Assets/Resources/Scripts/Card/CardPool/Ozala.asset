@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ozala
   m_EditorClassIdentifier: 
   CardId: 10
-  CardName: 
+  CardName: Ozala
   CardType: 2
   CardSubType: 0
   CardImage: {fileID: 21300000, guid: 51ff1ee5d4e740a448ff6b04d50748f6, type: 3}

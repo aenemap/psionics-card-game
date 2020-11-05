@@ -29,6 +29,7 @@ public class SyncListGameObject : SyncList<GameObject> { }
 [System.Serializable]
 public class SyncListMatch : SyncList<Match> { }
 
+
 public class MatchMaker : NetworkBehaviour
 {
     public static MatchMaker instance;
@@ -121,8 +122,8 @@ public class MatchMaker : NetworkBehaviour
                 foreach (var player in matches[i].players)
                 {
                     Player plr = player.GetComponent<Player>();
-                    //turnManager.AddPlayer(plr);
                     plr.StartGame();
+                    //turnManager.AddPlayer(plr);
                 }
                 break;
             }
@@ -132,9 +133,8 @@ public class MatchMaker : NetworkBehaviour
 
     private void HandleServerSceneHasChanged(string sceneName)
     {
-        if (sceneName == Utilities.SceneName)
+        if (sceneName == Utilities.MainGameSceneName)
         {
-            Debug.Log($"HandleServerSceneHasChanged Scene has Changed => SceneName => {sceneName}");
             GameObject turnManagerInstance = Instantiate(turnManagerPrefab);
             turnManagerInstance.GetComponent<NetworkMatchChecker>().matchId = Player.localPlayer.MatchID.ToGuid();
             TurnManager turnManager = turnManagerInstance.GetComponent<TurnManager>();
@@ -144,13 +144,13 @@ public class MatchMaker : NetworkBehaviour
                 {
                     foreach (var player in matches[i].players)
                     {
-                        Player plr = player.GetComponent<Player>();
-                        turnManager.AddPlayer(plr);                        
+                        //Player plr = player.GetComponent<Player>();
+                        turnManager.AddPlayer(player);                        
                     }
                     break;
                 }
             }
-            NetworkServer.Spawn(turnManagerInstance);
+            NetworkServer.Spawn(turnManagerInstance, this.connectionToClient);
             GameObject visualEventsInstance = Instantiate(visualEventsPrefab);
             NetworkServer.Spawn(visualEventsInstance);
         }

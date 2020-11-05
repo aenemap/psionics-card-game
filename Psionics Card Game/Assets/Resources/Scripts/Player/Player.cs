@@ -2,6 +2,10 @@
 using UnityEngine;
 using Mirror;
 using System.Linq;
+using System.Collections;
+using System;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Player : NetworkBehaviour
 {
@@ -9,27 +13,33 @@ public class Player : NetworkBehaviour
 
     [SerializeField] private CardManager cardManager = null;
     [SerializeField] private DeckManager deckManager = null;
+    [SerializeField] private GameObject samplePrefab = null;
 
     private int initialDealOfCards = 5;
 
-    public List<Card> cardsInDeck = new List<Card>();
+    private List<Card> cardsInDeck = new List<Card>();
+    private SyncListGameObject cardsInHand = new SyncListGameObject();
 
     NetworkMatchChecker networkMatchChecker;
     [SyncVar]
     public string MatchID;    
     [SyncVar]
     private string displayName;
+    [SyncVar]
+    private int deckId;
 
+
+    private bool spawiningCards = false;
 
     private void OnEnable()
     {
-        NetworkManagerPsionicsCG.OnServerSceneHasChanged += HandleServerSceneHasChanged;
+        NetworkManagerPsionicsCG.OnClientSceneHasChanged += HandleClientSceneHasChange;
     }
 
 
     private void OnDisable()
-    {
-        NetworkManagerPsionicsCG.OnServerSceneHasChanged -= HandleServerSceneHasChanged;
+    {        
+        NetworkManagerPsionicsCG.OnClientSceneHasChanged -= HandleClientSceneHasChange;
     }
 
     private void Awake()
@@ -68,6 +78,7 @@ public class Player : NetworkBehaviour
         {
             Debug.Log($"Game Hosted successfully ");
             SetDisplayName(playerDisplayName);
+            this.deckId = 10;
             match = MatchMaker.instance.matches.Where(w => w.MatchId == matchId).FirstOrDefault();
             foreach (var player in match.players)
             {
@@ -107,8 +118,9 @@ public class Player : NetworkBehaviour
         MatchID = matchId;
         if (MatchMaker.instance.JoinGame(matchId, gameObject))
         {
-            Debug.Log($"Game Hosted successfully ");
+            Debug.Log($"Game Joined successfully ");
             SetDisplayName(playerDisplayName);
+            this.deckId = 11;
             match = MatchMaker.instance.matches.Where(w => w.MatchId == matchId).FirstOrDefault();
             foreach (var player in match.players)
             {
@@ -163,82 +175,65 @@ public class Player : NetworkBehaviour
         //Debug.Log($"MatchId => {matchId} == {MatchID}");
         //SceneManager.LoadScene(2, LoadSceneMode.Additive);        
         //SceneManager.LoadScene(2);
-        NetworkManager.singleton.ServerChangeScene(Utilities.SceneName);
+        NetworkManager.singleton.ServerChangeScene(Utilities.MainGameSceneName);
     }
 
-
-    private void HandleServerSceneHasChanged(string sceneName)
+    private void HandleClientSceneHasChange(NetworkConnection conn)
     {
-        if (sceneName == Utilities.SceneName)
+        if (isLocalPlayer)
         {
-            Debug.Log($"Player On Change Scene => {sceneName} => isLocalPlayer = {isLocalPlayer.ToString()}");
 
+            DealCards();
         }
+        
+    }
 
-        var playerDeck = deckManager.GetDeckById(1);
+    private void DealCards()
+    {
+        CmdFillDecksWithCards();
+        for (int i = 0; i < initialDealOfCards; i++)
+        {
+            CmdSpawnCards();
+        }
+        //CmdMessageToDebug();
+    }
+
+    [Command]
+    private void CmdFillDecksWithCards()
+    {
+        var playerDeck = deckManager.GetDeckById(this.deckId);
         foreach (Card crd in playerDeck.DeckList)
         {
             cardsInDeck.Add(crd);
         }
-        CmdSpawnCards();
-
     }
 
-    //public override void OnStartServer()
-    //{
-    //    var playerDeck = deckManager.GetDeckById(1);
-    //    foreach (Card crd in playerDeck.DeckList)
-    //    {
-    //        cardsInDeck.Add(crd);
-    //    }
-    //}
-
-    //public override void OnStartClient()
-    //{
-    //    if (isLocalPlayer)
-    //        CmdSpawnCards();
-    //}
-
-    [Command(ignoreAuthority = true)]
-    private void CmdSpawnCards()
+    [Command]
+    private void CmdSpawnCards(NetworkConnectionToClient sender = null)
     {
-        for (int i = 0; i < initialDealOfCards; i++)
-        {
-            GameObject card = cardManager.GetCard(cardsInDeck[i].CardId);
-
-            GameObject parent = null;
-            if (isLocalPlayer)
-                parent = GameObject.Find("HandPivot");
-            else
-            {
-                parent = GameObject.Find("OpHandPivot");
-            }
-                
+        GameObject card = cardManager.GetGameObjectCard(cardsInDeck[0].CardId);
 
 
-            if (parent != null)
-            {
-                Debug.Log($"Setting the parent in Server => {parent.name}");
-                card.transform.SetParent(parent.transform);
-                card.transform.position = parent.transform.position;
-            }
-            NetworkServer.Spawn(card, connectionToClient);
-            Debug.Log(card.GetComponent<NetworkIdentity>().netId);
-            TargetSetUpCard(card);
-        }
+        Debug.Log($"PLAYER NAME => {this.GetDisplayName()} - CardName => {card.GetCardAsset().CardName}");
+        if (cardsInDeck.Count > 0)
+            cardsInDeck.RemoveAt(0);
+        cardsInHand.Add(card);
+
+        GameObject playerCard = Instantiate(card);
+
+        Debug.Log($"CardsInHand => {cardsInHand.Count}");
+        NetworkServer.Spawn(playerCard, connectionToClient);
+        RpcSetUpCard(playerCard);
     }
 
-    [TargetRpc]
-    private void TargetSetUpCard(GameObject card)
+    [ClientRpc]
+    private void RpcSetUpCard(GameObject card)
     {
-        if(card != null)
-        {
-            Debug.Log("THE CARD IS NOT NULL");
-            GameObject parent = GameObject.Find("HandPivot");
-            card.transform.SetParent(parent.transform);
-            card.transform.position = parent.transform.position;
-        }
+        TextMeshProUGUI debugText = GameObject.Find("DebugText").GetComponent<TextMeshProUGUI>();
+        debugText.text += $"PLAYER NAME => {this.GetDisplayName()} CardNetId => {card.GetComponent<NetworkIdentity>().netId}\n";
+        GameManagerUI.singleton.SetUpCard(card, this.isLocalPlayer);
     }
+
 
 
     public void SetDisplayName(string displayName)
@@ -250,4 +245,15 @@ public class Player : NetworkBehaviour
     {
         return displayName;
     }
+
+    public List<GameObject> GetCardsInHand()
+    {
+        return cardsInHand.ToList();
+    }
+
+    public List<Card> GetCardsInDeck()
+    {
+        return cardsInDeck;
+    }
+
 }

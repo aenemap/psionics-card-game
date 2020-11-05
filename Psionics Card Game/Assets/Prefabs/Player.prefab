@@ -80,5 +80,6 @@ MonoBehaviour:
   syncInterval: 0.1
   cardManager: {fileID: 1495618439086376653, guid: 1925713fdcf7877489ae59ce58679b92, type: 3}
   deckManager: {fileID: 4322577488795464695, guid: d5ed035fb3d33f34da0ba03966705ce3, type: 3}
+  samplePrefab: {fileID: 4746975657630706559, guid: bcbe8d9e487fe5340a4429c67cc6166b, type: 3}
+  cardsInDeck: []
   MatchID: 
-  PlayerIndex: 0

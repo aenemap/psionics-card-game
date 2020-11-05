@@ -63,6 +63,32 @@ public class CardManager : MonoBehaviour
         return null;
     }
 
+    public GameObject GetGameObjectCard(int cardId)
+    {
+        Card findCard = GetCardsFromResource().Where(w => w.CardId == cardId).FirstOrDefault();
+        card = GetTypeOfCard(findCard);
+        var cardDisplay = card.GetComponent<CardDisplay>();
+        var cardPreview = card.transform.Find("CardPreview");
+        var cardPreviewDisplay = cardPreview.GetComponent<CardPreviewDisplay>();
+        var canvas = card.transform.Find("Canvas");
+        var cardArt = canvas.transform.Find("ArtCard");
+        ArtCardPreviewDisplay cardArtPreviewDisplay = null;
+        if (cardArt != null)
+            cardArtPreviewDisplay = cardArt.GetComponent<ArtCardPreviewDisplay>();
+
+
+        if (findCard != null)
+        {
+            cardDisplay.card = findCard;
+            cardPreviewDisplay.card = findCard;
+            if (cardArtPreviewDisplay != null)
+                cardArtPreviewDisplay.card = findCard;
+
+            return card;
+        }
+        return null;
+    }
+
     private GameObject GetTypeOfCard(Card card)
     {
         GameObject returnCard;
