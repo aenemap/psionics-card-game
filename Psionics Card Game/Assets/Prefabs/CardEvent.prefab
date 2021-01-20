@@ -1852,6 +1852,7 @@ GameObject:
   - component: {fileID: 2699145906324460321}
   - component: {fileID: 6862473161438177451}
   - component: {fileID: -1037007604135732048}
+  - component: {fileID: 8336532796742996354}
   m_Layer: 0
   m_Name: CardEvent
   m_TagString: Card
@@ -1946,6 +1947,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 317092e5f2ad2724e9e8761f47382305, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!225 &6667822979106532214
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2010,6 +2013,21 @@ MonoBehaviour:
   localPositionSensitivity: 0.01
   localRotationSensitivity: 0.01
   localScaleSensitivity: 0.01
+--- !u!114 &8336532796742996354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8653782343194278731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1020a74962faada4b807ac5dc053a4cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  currentMatchDebug: 
 --- !u!1 &8653782343278564403
 GameObject:
   m_ObjectHideFlags: 0

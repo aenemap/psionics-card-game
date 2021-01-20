@@ -27,9 +27,8 @@ public class Player : NetworkBehaviour
     private string displayName;
     [SyncVar]
     private int deckId;
-
-
-    private bool spawiningCards = false;
+    [SyncVar]
+    private NetworkIdentityReference _card = new NetworkIdentityReference();
 
     private void OnEnable()
     {
@@ -38,7 +37,7 @@ public class Player : NetworkBehaviour
 
 
     private void OnDisable()
-    {        
+    {
         NetworkManagerPsionicsCG.OnClientSceneHasChanged -= HandleClientSceneHasChange;
     }
 
@@ -176,7 +175,18 @@ public class Player : NetworkBehaviour
         //SceneManager.LoadScene(2, LoadSceneMode.Additive);        
         //SceneManager.LoadScene(2);
         NetworkManager.singleton.ServerChangeScene(Utilities.MainGameSceneName);
+        //AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(2);
+        //asyncOperation.completed += AsyncOperation_completed;
     }
+
+    //private void AsyncOperation_completed(AsyncOperation obj)
+    //{
+    //    if (isLocalPlayer)
+    //    {
+
+    //        DealCards();
+    //    }
+    //}
 
     private void HandleClientSceneHasChange(NetworkConnection conn)
     {
@@ -185,7 +195,7 @@ public class Player : NetworkBehaviour
 
             DealCards();
         }
-        
+
     }
 
     private void DealCards()
@@ -211,8 +221,10 @@ public class Player : NetworkBehaviour
     [Command]
     private void CmdSpawnCards(NetworkConnectionToClient sender = null)
     {
+        if (_card.Value != null)
+            return;
         GameObject card = cardManager.GetGameObjectCard(cardsInDeck[0].CardId);
-
+        card.GetComponent<NetworkMatchChecker>().matchId = this.MatchID.ToGuid();
 
         Debug.Log($"PLAYER NAME => {this.GetDisplayName()} - CardName => {card.GetCardAsset().CardName}");
         if (cardsInDeck.Count > 0)
@@ -223,14 +235,15 @@ public class Player : NetworkBehaviour
 
         Debug.Log($"CardsInHand => {cardsInHand.Count}");
         NetworkServer.Spawn(playerCard, connectionToClient);
-        RpcSetUpCard(playerCard);
+        _card = new NetworkIdentityReference(playerCard.GetComponent<NetworkIdentity>());
+        TargetSetUpCard(playerCard);
     }
 
-    [ClientRpc]
-    private void RpcSetUpCard(GameObject card)
+    [TargetRpc]
+    private void TargetSetUpCard(GameObject card)
     {
-        TextMeshProUGUI debugText = GameObject.Find("DebugText").GetComponent<TextMeshProUGUI>();
-        debugText.text += $"PLAYER NAME => {this.GetDisplayName()} CardNetId => {card.GetComponent<NetworkIdentity>().netId}\n";
+        //TextMeshProUGUI debugText = GameObject.Find("DebugText").GetComponent<TextMeshProUGUI>();
+        //debugText.text += $"PLAYER NAME => {this.GetDisplayName()} CardNetId => {card.GetComponent<NetworkIdentity>().netId}\n";
         GameManagerUI.singleton.SetUpCard(card, this.isLocalPlayer);
     }
 
